@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <!-- 旧域名/路径兼容：将 scan.example.com 或历史路径统一跳转到新规范 -->
+        <rule name="Legacy QR Redirect" stopProcessing="true">
+          <match url="^index\.html$" ignoreCase="true" />
+          <conditions logicalGrouping="MatchAny">
+            <add input="{HTTP_HOST}" pattern="^scan\.example\.com$" />
+            <add input="{QUERY_STRING}" pattern="(^|&)id=(A|B)-Q\d{9}(&|$)" />
+          </conditions>
+          <action type="Redirect" url="https://example-brand-a.com/index.html?code={C:2}-{R:0}" redirectType="Permanent" />
+        </rule>
+        
+        <!-- 将 /companies/demo_json_a/* 和 /companies/demo_json_b/* 作为静态 JSON 提供，强制 JSON MIME -->
+        <rule name="Force JSON Mime" stopProcessing="true">
+          <match url="^companies/(demo_json_a|demo_json_b)/.*\.json$" />
+          <action type="None" />
+        </rule>
+      </rules>
+    </rewrite>
+    <staticContent>
+      <remove fileExtension=".json" />
+      <mimeMap fileExtension=".json" mimeType="application/json; charset=utf-8" />
+    </staticContent>
+    <httpProtocol>
+      <customHeaders>
+        <add name="Access-Control-Allow-Origin" value="*" />
+        <add name="Access-Control-Allow-Methods" value="GET, OPTIONS" />
+        <add name="Access-Control-Allow-Headers" value="Content-Type" />
+      </customHeaders>
+    </httpProtocol>
+  </system.webServer>
+</configuration>

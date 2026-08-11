@@ -1,0 +1,29 @@
+# Normalize text files and line endings
+* text=auto
+
+# Scripts line endings
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.sh  text eol=lf
+
+# Source code
+*.py  text eol=lf
+*.php text eol=lf
+*.js  text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.exe binary
+*.dll binary
+
+# Improve linguist detection (optional)
+*.ps1 linguist-language=PowerShell

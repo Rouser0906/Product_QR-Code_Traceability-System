@@ -1,0 +1,22 @@
+﻿{
+  "A": {
+    "host": "your-ftp-server.com",
+    "port": 21,
+    "user": "your_ftp_username",
+    "pass": "your_ftp_password",
+    "base_path": "/companies/demo_json_a/",
+    "tls": false,
+    "timeout": 30,
+    "passive_mode": true
+  },
+  "B": {
+    "host": "your-ftp-server.com",
+    "port": 21,
+    "user": "your_ftp_username",
+    "pass": "your_ftp_password",
+    "base_path": "/companies/demo_json_b/",
+    "tls": false,
+    "timeout": 30,
+    "passive_mode": true
+  }
+}

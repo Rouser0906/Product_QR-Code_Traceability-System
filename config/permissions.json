@@ -1,0 +1,91 @@
+{
+  "system_info": {
+    "permission_system": "database_based",
+    "version": "2.0",
+    "migration_date": "2025-01-15",
+    "description": "权限系统已迁移到数据库，此文件仅作为配置参考"
+  },
+  "role_matrix": {
+    "admin": {
+      "name": "超级管理员",
+      "code": "admin",
+      "employee_id": "admin", 
+      "permissions": "*",
+      "description": "系统全部权限（\"*\"），即任何资源任何操作"
+    },
+    "operator": {
+      "name": "系统操作员", 
+      "code": "operator",
+      "permissions": "除删除外的所有操作",
+      "description": "拥有：新增(create)、编辑(update)、查询(view)、下载(download)、打印(print)；禁止：删除(delete)",
+      "example_bindings": [
+        "company.view", "company.create", "company.update",
+        "department.view", "department.create", "department.update", 
+        "staff.view", "staff.create", "staff.update",
+        "qr.generate", "qr.print", "qr.read", "qr.download",
+        "qr_history.view", "qr_history.download", "qr_history.print",
+        "logistics.view", "logistics.create", "logistics.update"
+      ]
+    },
+    "manager": {
+      "name": "管理者",
+      "code": "manager",
+      "permissions": "浏览 + 生产数据删除/下载/打印",
+      "description": "包括部门经理/总监/副总/总/董事/董事长，只能浏览(view) + 对生产数据的删除/下载/打印",
+      "production_data_definition": "二维码打印列表与二维码历史",
+      "example_bindings": [
+        "company.view", "department.view", "staff.view", "logistics.view",
+        "qr_history.view", "qr_history.delete", "qr_history.download", "qr_history.print",
+        "qr.view", "qr.delete", "qr.download", "qr.print"
+      ]
+    },
+    "viewer": {
+      "name": "系统浏览者",
+      "code": "viewer", 
+      "permissions": "仅浏览(view)",
+      "description": "无其他任何操作",
+      "example_bindings": [
+        "company.view", "department.view", "staff.view", 
+        "logistics.view", "qr.view", "qr_history.view"
+      ]
+    }
+  },
+  "permission_naming_standards": {
+    "resources": ["company", "department", "staff", "logistics", "qr", "qr_history", "users"],
+    "actions": ["view", "create", "update", "delete", "download", "print", "generate"],
+    "format": "resource.action",
+    "wildcard_support": true,
+    "examples": {
+      "specific": "qr.generate",
+      "resource_wildcard": "logistics.*", 
+      "global_wildcard": "*"
+    }
+  },
+  "table_structure": {
+    "roles": {
+      "columns": ["id", "name", "description"],
+      "purpose": "角色定义"
+    },
+    "permissions": {
+      "columns": ["id", "resource", "action"],
+      "purpose": "权限定义"
+    },
+    "role_permissions": {
+      "columns": ["role_id", "permission_id"],
+      "purpose": "角色权限映射"
+    },
+    "users": {
+      "columns": ["id", "username", "employee_id", "role_id"],
+      "purpose": "用户与角色关联"
+    }
+  },
+  "implementation_notes": [
+    "权限数据存储在数据库中，不再依赖此JSON文件",
+    "中央校验方法：has_permission(user, \"resource.action\")",
+    "支持通配符匹配，如 logistics.*",
+    "各模块入口与按钮事件前需做权限检查",
+    "根据has_permission动态隐藏/禁用不允许的菜单项与按钮",
+    "删除、下载、打印仅对管理者在qr与qr_history模块开放",
+    "操作员不可见或禁用\"删除\"功能"
+  ]
+}

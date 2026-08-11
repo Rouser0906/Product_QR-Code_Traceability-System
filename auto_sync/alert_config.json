@@ -1,0 +1,73 @@
+{
+    "enabled": true,
+    "check_interval_seconds": 60,
+    "alerts": {
+        "process_down": {
+            "enabled": true,
+            "severity": "high",
+            "description": "上传进程停止运行",
+            "threshold": 0,
+            "notification_methods": ["system_event", "sound", "log"]
+        },
+        "log_stale": {
+            "enabled": true,
+            "severity": "medium", 
+            "description": "日志文件长时间无更新",
+            "threshold_minutes": 10,
+            "notification_methods": ["system_event", "log"]
+        },
+        "upload_failure_rate": {
+            "enabled": true,
+            "severity": "medium",
+            "description": "上传失败率过高",
+            "threshold_percent": 20,
+            "sample_size": 20,
+            "notification_methods": ["system_event", "sound"]
+        },
+        "disk_space_low": {
+            "enabled": true,
+            "severity": "high",
+            "description": "磁盘空间不足",
+            "threshold_gb": 1,
+            "notification_methods": ["system_event", "sound", "log"]
+        },
+        "ftp_connectivity": {
+            "enabled": true,
+            "severity": "high",
+            "description": "FTP服务器连接失败",
+            "retry_attempts": 3,
+            "notification_methods": ["system_event", "sound"]
+        },
+        "file_queue_overflow": {
+            "enabled": true,
+            "severity": "medium",
+            "description": "待上传文件队列过长",
+            "threshold_count": 100,
+            "notification_methods": ["system_event"]
+        }
+    },
+    "notification_settings": {
+        "system_event": {
+            "source": "AutoSyncMonitor",
+            "event_id_base": 1000
+        },
+        "sound": {
+            "enabled": true,
+            "frequency": 1000,
+            "duration_ms": 500,
+            "repeat_count": 2
+        },
+        "email": {
+            "enabled": false,
+            "smtp_server": "",
+            "smtp_port": 587,
+            "from_address": "",
+            "to_addresses": [],
+            "subject_prefix": "[AutoSync Alert]"
+        }
+    },
+    "rate_limiting": {
+        "same_alert_cooldown_minutes": 10,
+        "max_alerts_per_hour": 20
+    }
+}

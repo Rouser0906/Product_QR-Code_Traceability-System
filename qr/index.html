@@ -1,0 +1,459 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>产品溯源信息 · scan.example.com</title>
+  <link rel="preconnect" href="https://example.com" crossorigin>
+  <style>
+    body{
+      margin:0;
+      font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color:#333;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .container{
+      flex:1;
+      padding:12px;
+      max-width:420px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+    }
+    .header{
+      background:rgba(255,255,255,0.95);
+      border-radius:12px 12px 0 0;
+      padding:16px;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .header .title{
+      font-size:18px;
+      font-weight:700;
+      color:#1a365d;
+      margin-bottom:8px;
+    }
+    .header .subtitle{
+      font-size:14px;
+      color:#4a5568;
+      margin-bottom:4px;
+    }
+    .header .domain{
+      font-size:12px;
+      color:#718096;
+      font-weight:500;
+    }
+    .content{
+      background:rgba(255,255,255,0.98);
+      padding:0;
+      flex:1;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .info-section{
+      padding:16px;
+    }
+    .section-title{
+      font-size:16px;
+      font-weight:600;
+      color:#2d3748;
+      margin-bottom:12px;
+      padding-bottom:8px;
+      border-bottom:2px solid #e2e8f0;
+    }
+    .info-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      padding:10px 0;
+      border-bottom:1px solid #f7fafc;
+      min-height:20px;
+    }
+    .info-row:last-child{
+      border-bottom:none;
+    }
+    .info-label{
+      color:#4a5568;
+      font-size:14px;
+      font-weight:500;
+      text-align:left;
+      flex-shrink:0;
+      width:85px;
+      line-height:1.4;
+    }
+    .info-value{
+      color:#1a202c;
+      font-size:14px;
+      font-weight:600;
+      text-align:right;
+      flex:1;
+      word-break:break-all;
+      line-height:1.4;
+      margin-left:8px;
+    }
+    .highlight{
+      color:#2b6cb0;
+      font-weight:700;
+    }
+    .status-pass{
+      color:#38a169;
+      font-weight:700;
+    }
+    .footer{
+      background:rgba(255,255,255,0.95);
+      border-radius:0 0 12px 12px;
+      padding:16px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .btn{
+      display:block;
+      width:100%;
+      padding:14px;
+      background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      font-weight:600;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(102,126,234,0.4);
+      transition:all 0.3s ease;
+      margin-bottom:12px;
+    }
+    .btn:active{
+      transform:translateY(2px);
+      box-shadow:0 2px 6px rgba(102,126,234,0.4);
+    }
+    .copyright{
+      font-size:11px;
+      color:#718096;
+      text-align:center;
+      line-height:1.3;
+    }
+    .loading{
+      text-align:center;
+      padding:40px 20px;
+      color:#4a5568;
+      font-size:16px;
+    }
+    .error{
+      color:#e53e3e;
+      text-align:center;
+      padding:20px;
+      background:rgba(254,226,226,0.8);
+      border-radius:8px;
+      margin:16px;
+    }
+    .parse-indicator{
+      background:rgba(56,161,105,0.1);
+      color:#38a169;
+      padding:8px 12px;
+      border-radius:6px;
+      font-size:12px;
+      text-align:center;
+      margin-bottom:16px;
+      border:1px solid rgba(56,161,105,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header" id="header">
+      <div class="title">●产品溯源.示例城市</div>
+      <div class="subtitle">正品保证.一物一码.全程可溯</div>
+      <div class="domain">scan.example.com</div>
+    </div>
+    <div class="content" id="content">
+      <div class="loading">正在加载产品信息...</div>
+    </div>
+    <div class="footer" id="footer">
+      <a class="btn" href="#" id="websiteBtn">进入官网</a>
+      <div class="copyright" id="copyright">C2025[已脱敏城市]示例品牌B材料有限公司.科技赋能.安全溯源</div>
+    </div>
+  </div>
+  
+  <script>
+    // 获取二维码参数 - 支持多种格式
+    const pathToken = location.pathname.split('/').filter(Boolean)[1];
+    const queryCode = new URLSearchParams(location.search).get('code');
+    const queryId = new URLSearchParams(location.search).get('id');
+    const queryText = new URLSearchParams(location.search).get('text');
+    const queryData = new URLSearchParams(location.search).get('data');
+    const queryContent = new URLSearchParams(location.search).get('content');
+    
+    // 检测二维码内容类型
+    const code = pathToken || queryCode || queryId;
+    const textContent = queryText || queryData || queryContent;
+    
+    // 优先处理文本内容（直接扫描二维码文本）
+    if (textContent) {
+      parseQRTextContent(textContent);
+    } else if (code) {
+      // 如果有代码参数，按原有方式处理
+      loadProductData(code);
+    } else {
+      // 尝试从URL fragment获取数据（某些扫码应用会将数据放在#后面）
+      const fragment = location.hash.substring(1);
+      if (fragment) {
+        try {
+          const fragmentData = decodeURIComponent(fragment);
+          if (fragmentData.includes('；') || fragmentData.includes(';')) {
+            parseQRTextContent(fragmentData);
+            return;
+          }
+        } catch (e) {
+          console.log('Fragment解析失败:', e);
+        }
+      }
+      
+      // 显示错误信息，但提供手动输入选项
+      document.getElementById('content').innerHTML = `
+        <div class="error">
+          <p>抱歉，暂时无法解析二维码信息。</p>
+          <p>错误：HTTP 500</p>
+          <p>请稍后重试。</p>
+          <br>
+          <details>
+            <summary>调试信息</summary>
+            <div style="font-size:12px;color:#666;margin-top:10px;">
+              URL: ${location.href}<br>
+              Code: ${code || '无'}<br>
+              Text: ${textContent || '无'}<br>
+              Fragment: ${location.hash || '无'}
+            </div>
+          </details>
+        </div>
+      `;
+    }
+    
+    async function loadProductData(code) {
+      try {
+        // 首先尝试新的 resolve API
+        let data;
+        try {
+          const response = await fetch(`/api/resolve?id=${encodeURIComponent(code)}`, { cache: 'force-cache' });
+          if (response.ok) {
+            data = await response.json();
+            if (!data.error) {
+              renderProductData(data, code);
+              return;
+            }
+          }
+        } catch (e) {
+          console.log('Resolve API 不可用，尝试原始API...');
+        }
+        
+        // 回退到原始 API
+        const response = await fetch(`/api/get_product_data.php?code=${encodeURIComponent(code)}`, { cache: 'force-cache' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const originalData = await response.json();
+        if (originalData.error) {
+          throw new Error(originalData.error);
+        }
+        
+        // 转换数据格式
+        data = {
+          qrcNo: originalData.qr_sequence || code,
+          qrSequence: originalData.qr_sequence || code,
+          companyName: originalData.company_name || '',
+          productType: originalData.product_type || '',
+          productSpec: originalData.product_spec || '',
+          productColor: originalData.product_color || '',
+          productFeature: originalData.product_feature || '',
+          batchNumber: originalData.batch_number || '',
+          productionDate: originalData.production_date || '',
+          distributorName: originalData.distributor_name || '',
+          phone: originalData.phone || '',
+          standard: originalData.standard || '',
+          remark: originalData.remark || '',
+          companyUrl: originalData.official_website || ''
+        };
+        
+        renderProductData(data, code);
+        
+      } catch (error) {
+        console.error('加载产品信息失败:', error);
+        document.getElementById('content').innerHTML = `<div class="error">抱歉，暂时无法解析二维码信息。<br>错误：${error.message}<br>请稍后重试。</div>`;
+      }
+    }
+    
+    function renderProductData(data, code) {
+      const s = v => (v ?? '').toString();
+      
+      // 识别公司类型并更新头部
+      updateCompanyHeader(data.companyName || '');
+      
+      const html = `
+        <div class="info-section">
+          <div class="section-title">产品溯源信息</div>
+          <div class="info-row"><div class="info-label">二维码序号</div><div class="info-value highlight">${s(data.qrcNo || data.qrSequence || code)}</div></div>
+          <div class="info-row"><div class="info-label">公司名称</div><div class="info-value">${s(data.companyName)}</div></div>
+          <div class="info-row"><div class="info-label">产品名称</div><div class="info-value">${s(data.productType)}</div></div>
+          <div class="info-row"><div class="info-label">产品规格</div><div class="info-value">${s(data.productSpec)}</div></div>
+          <div class="info-row"><div class="info-label">产品特性</div><div class="info-value">${s(data.productFeature)}</div></div>
+          <div class="info-row"><div class="info-label">产品颜色</div><div class="info-value">${s(data.productColor)}</div></div>
+          <div class="info-row"><div class="info-label">生产日期</div><div class="info-value">${s(data.productionDate)}</div></div>
+          <div class="info-row"><div class="info-label">产品批次号</div><div class="info-value">${s(data.batchNumber)}</div></div>
+          <div class="info-row"><div class="info-label">出厂检验</div><div class="info-value status-pass">${s(data.qualityStatus || '合格')}</div></div>
+          <div class="info-row"><div class="info-label">业务员电话</div><div class="info-value">${s(data.phone)}</div></div>
+          <div class="info-row"><div class="info-label">执行标准</div><div class="info-value">${s(data.standard)}</div></div>
+          <div class="info-row"><div class="info-label">经销商名称</div><div class="info-value">${s(data.distributorName)}</div></div>
+          <div class="info-row"><div class="info-label">物流车牌</div><div class="info-value">${s(data.plateNumber || '')}</div></div>
+          <div class="info-row"><div class="info-label">发行者工号</div><div class="info-value">${s(data.issuerCode || '')}</div></div>
+          <div class="info-row"><div class="info-label">备注</div><div class="info-value">${s(data.remark)}</div></div>
+        </div>
+      `;
+      
+      document.getElementById('content').innerHTML = html;
+      
+      // 更新官网按钮
+      updateWebsiteButton(data.companyUrl || data.officialWebsite);
+    }
+    
+    // 新增：解析二维码文本内容的函数
+    function parseQRTextContent(text) {
+      try {
+        // 显示解析状态
+        document.getElementById('content').innerHTML = '<div class="loading">正在解析二维码文本内容...</div>';
+        
+        // 支持多种分隔符
+        let parts = [];
+        if (text.includes('；')) {
+          parts = text.split('；').map(part => part.trim()).filter(part => part);
+        } else if (text.includes(';')) {
+          parts = text.split(';').map(part => part.trim()).filter(part => part);
+        } else if (text.includes('|')) {
+          parts = text.split('|').map(part => part.trim()).filter(part => part);
+        } else if (text.includes(',')) {
+          parts = text.split(',').map(part => part.trim()).filter(part => part);
+        } else {
+          // 尝试按换行符分割
+          parts = text.split(/[
+
+]+/).map(part => part.trim()).filter(part => part);
+        }
+        
+        if (parts.length < 8) {
+          throw new Error(`二维码格式不正确，字段数量不足（当前${parts.length}个字段，至少需要8个）`);
+        }
+        
+        // 解析字段（根据您需求图片中的格式）
+        const productData = {
+          companyName: parts[0] || '',          // 公司名称
+          companyUrl: parts[1] || '',           // 官网
+          productType: parts[2] || '',          // 产品类型
+          productSpec: parts[3] || '',          // 规格
+          productFeature: parts[4] || '',       // 特性
+          productColor: parts[5] || '',         // 颜色
+          plateNumber: parts[6] || '',          // 车牌
+          phone: parts[7] || '',                // 电话
+          productionDate: parts[8] || '',       // 生产日期
+          batchNumber: parts[9] || '',          // 批次
+          qualityStatus: parts[10] || '合格',   // 质量状态
+          qrSequence: parts[11] || '',          // 二维码编号
+          issuerCode: parts[12] || '',          // 签发机构
+          standard: parts[13] || '',            // 执行标准
+          distributorName: parts[14] || '',     // 经销商
+          remark: parts[15] || ''               // 备注
+        };
+        
+        // 识别公司类型并更新头部
+        updateCompanyHeader(productData.companyName);
+        
+        // 生成HTML - 按照需求图片的布局
+        const s = v => (v ?? '').toString();
+        let html = `
+          <div class="parse-indicator">✓ 智能解析二维码文本内容</div>
+          <div class="info-section">
+            <div class="section-title">产品溯源信息</div>
+            <div class="info-row"><div class="info-label">二维码序号</div><div class="info-value highlight">${s(productData.qrSequence)}</div></div>
+            <div class="info-row"><div class="info-label">公司名称</div><div class="info-value">${s(productData.companyName)}</div></div>
+            <div class="info-row"><div class="info-label">产品名称</div><div class="info-value">${s(productData.productType)}</div></div>
+            <div class="info-row"><div class="info-label">产品规格</div><div class="info-value">${s(productData.productSpec)}</div></div>
+            <div class="info-row"><div class="info-label">产品特性</div><div class="info-value">${s(productData.productFeature)}</div></div>
+            <div class="info-row"><div class="info-label">产品颜色</div><div class="info-value">${s(productData.productColor)}</div></div>
+            <div class="info-row"><div class="info-label">生产日期</div><div class="info-value">${s(productData.productionDate)}</div></div>
+            <div class="info-row"><div class="info-label">产品批次号</div><div class="info-value">${s(productData.batchNumber)}</div></div>
+            <div class="info-row"><div class="info-label">出厂检验</div><div class="info-value status-pass">${s(productData.qualityStatus)}</div></div>
+            <div class="info-row"><div class="info-label">物流车牌</div><div class="info-value">${s(productData.plateNumber)}</div></div>
+            <div class="info-row"><div class="info-label">业务员电话</div><div class="info-value">${s(productData.phone)}</div></div>
+            <div class="info-row"><div class="info-label">执行标准</div><div class="info-value">${s(productData.standard)}</div></div>
+            <div class="info-row"><div class="info-label">经销商名称</div><div class="info-value">${s(productData.distributorName)}</div></div>
+            <div class="info-row"><div class="info-label">发行者工号</div><div class="info-value">${s(productData.issuerCode)}</div></div>
+            <div class="info-row"><div class="info-label">公网网址</div><div class="info-value">${s(productData.companyUrl)}</div></div>
+            <div class="info-row"><div class="info-label">备注</div><div class="info-value">${s(productData.remark)}</div></div>
+          </div>
+        `;
+        
+        document.getElementById('content').innerHTML = html;
+        
+        // 更新官网按钮
+        updateWebsiteButton(productData.companyUrl);
+        
+      } catch (error) {
+        console.error('解析二维码文本失败:', error);
+        document.getElementById('content').innerHTML = `
+        <div class="error">
+          二维码内容解析失败<br>
+          错误：${error.message}<br><br>
+          <details>
+            <summary>查看原始内容（共${text.length}个字符）</summary>
+            <div style="background:#f8f8f8;padding:10px;margin:10px 0;font-family:monospace;font-size:12px;word-break:break-all;max-height:200px;overflow-y:auto;">
+              ${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+            </div>
+          </details>
+          <p style="font-size:12px;color:#666;">
+            支持的分隔符：中文分号（；）、英文分号（;）、竖线（|）、逗号（,）或换行符
+          </p>
+        </div>`;
+      }
+    }
+    
+    // 新增：更新公司头部信息
+    function updateCompanyHeader(companyName) {
+      const headerTitle = document.querySelector('.header .title');
+      const copyright = document.getElementById('copyright');
+      
+      // 识别公司类型
+      if (companyName.includes('示例') || companyName.includes('B')) {
+        headerTitle.textContent = '●产品溯源.示例品牌A';
+        copyright.textContent = 'C2025[已脱敏城市]示例品牌A有限公司.安全溯源';
+      } else {
+        // 默认为示例公司
+        headerTitle.textContent = '●产品溯源.示例城市';
+        copyright.textContent = 'C2025[已脱敏城市]示例品牌B材料有限公司.科技赋能.安全溯源';
+      }
+    }
+    
+    // 新增：更新官网按钮
+    function updateWebsiteButton(websiteUrl) {
+      const btn = document.getElementById('websiteBtn');
+      
+      if (websiteUrl && websiteUrl.trim()) {
+        let url = websiteUrl.trim();
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          url = 'https://' + url;
+        }
+        btn.href = url;
+        btn.style.display = 'block';
+        btn.textContent = '进入官网';
+      } else {
+        btn.href = '#';
+        btn.style.display = 'block';
+        btn.textContent = '暂无官网信息';
+        btn.style.opacity = '0.5';
+        btn.onclick = function(e) {
+          e.preventDefault();
+          return false;
+        };
+      }
+    }
+  </script>
+</body>
+</html>

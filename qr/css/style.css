@@ -1,0 +1,115 @@
+/* 全局样式 */
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #f0f2f5; /* 页面背景色 */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 卡片容器 */
+.card {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* 卡片头部 */
+.card-header {
+    background-color: #27ae60; /* 头部绿色背景 */
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+.card-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+.card-header p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* 卡片主体内容 */
+.card-body {
+    padding: 10px 20px;
+}
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+}
+.info-item:last-child {
+    border-bottom: none;
+}
+.info-item .label {
+    color: #888888; /* 标签文字颜色 */
+}
+.info-item .value {
+    color: #333333; /* 内容文字颜色 */
+    text-align: right;
+}
+.info-item .value a {
+    color: #2980b9; /* 链接颜色 */
+    text-decoration: none;
+}
+
+/* 主体部分的页脚（官网按钮） */
+.info-footer {
+    text-align: center;
+    padding: 20px 0;
+}
+.info-footer p {
+    color: #888;
+    font-size: 14px;
+}
+.btn {
+    display: inline-block;
+    background-color: #2980b9; /* 按钮蓝色 */
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+.btn:hover {
+    background-color: #3498db;
+}
+
+/* 卡片底部 */
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+}
+.card-footer p {
+    margin: 5px 0;
+}
+.checkmark {
+    color: #27ae60; /* 对勾绿色 */
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* 加载和错误提示 */
+.loading, .error {
+    text-align: center;
+    padding: 40px 0;
+    color: #888;
+    font-size: 16px;
+}
+.error {
+    color: #e74c3c;
+}

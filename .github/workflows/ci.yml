@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  python-and-php-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies if present
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if python -c "import importlib.util as u; print(u.find_spec('flake8') is not None)" 2>/dev/null | grep -q True; then echo "flake8 present"; else pip install flake8; fi
+
+      - name: Python static checks
+        run: |
+          echo "Running Python syntax check and flake8..."
+          python - <<'PY'
+          import os, sys, py_compile
+          for root, _, files in os.walk('.'):
+              for f in files:
+                  if f.endswith('.py'):
+                      try:
+                          py_compile.compile(os.path.join(root, f), doraise=True)
+                      except Exception as e:
+                          print(f"Syntax error in {os.path.join(root, f)}: {e}")
+                          sys.exit(1)
+          print('Python syntax OK')
+          PY
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: PHP lint
+        run: |
+          echo "Running PHP lint..."
+          if compgen -G "api/*.php" > /dev/null; then
+            for f in api/*.php; do php -l "$f" || exit 1; done
+          else
+            echo "No PHP files found in api/"
+          fi

@@ -1,0 +1,33 @@
+{
+    "performance_optimizations": {
+        "scan_interval_seconds": 8,
+        "connection_timeout_ms": 10000,
+        "upload_timeout_ms": 20000,
+        "max_retry_attempts": 3,
+        "retry_delay_ms": 500,
+        "retry_backoff_multiplier": 1.5,
+        "file_stability_check_ms": 200,
+        "use_passive_ftp": true,
+        "buffer_size_kb": 64,
+        "enable_keep_alive": true
+    },
+    "monitoring": {
+        "health_check_interval_minutes": 2,
+        "log_rotation_size_mb": 5,
+        "performance_metrics_enabled": true,
+        "alert_on_slow_upload": true,
+        "slow_upload_threshold_kbps": 10
+    },
+    "batch_processing": {
+        "max_files_per_scan": 30,
+        "prioritize_recent_files": true,
+        "skip_large_files_mb": 3,
+        "process_a_files_first": true
+    },
+    "system_resources": {
+        "max_cpu_usage_percent": 70,
+        "max_memory_usage_mb": 256,
+        "pause_on_high_load": true,
+        "load_check_interval_seconds": 60
+    }
+}

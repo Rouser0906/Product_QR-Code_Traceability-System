@@ -1,0 +1,47 @@
+{
+    "sync_tasks": [
+        {
+            "task_id": "company1_sync",
+            "company": "company1",
+            "local_path": "cloud/company1json/",
+            "remote_path": "/companies/company1json/",
+            "file_pattern": "*.json",
+            "enabled": true,
+            "priority": 1
+        },
+        {
+            "task_id": "company2_sync",
+            "company": "company2",
+            "local_path": "cloud/company2json/",
+            "remote_path": "/companies/company2json/",
+            "file_pattern": "*.json",
+            "enabled": true,
+            "priority": 1
+        }
+    ],
+    "auto_sync": {
+        "enabled": true,
+        "scan_interval": 30,
+        "max_concurrent_uploads": 2,
+        "retry_attempts": 3,
+        "retry_delay": 5,
+        "delete_after_upload": false,
+        "overwrite_existing": false
+    },
+    "file_watcher": {
+        "enabled": true,
+        "recursive": true,
+        "event_debounce_time": 2.0
+    },
+    "event_queue": {
+        "max_size": 1000,
+        "processing_interval": 1.0,
+        "batch_size": 10
+    },
+    "logging": {
+        "level": "INFO",
+        "log_file": "auto_sync/logs/auto_sync.log",
+        "max_log_size": "10MB",
+        "backup_count": 5
+    }
+}

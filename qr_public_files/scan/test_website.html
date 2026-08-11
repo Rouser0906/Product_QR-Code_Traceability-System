@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>官网按钮测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .debug {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 12px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2>官网按钮测试页面</h2>
+        
+        <div class="info">
+            <strong>测试目标：</strong>验证官网按钮是否能正常跳转到 https://www.your-company-domain.com
+        </div>
+        
+        <!-- 测试按钮1：直接链接 -->
+        <a href="https://www.your-company-domain.com" target="_blank" class="btn">
+            测试1：直接链接到官网
+        </a>
+        
+        <!-- 测试按钮2：JavaScript设置 -->
+        <a href="#" id="jsBtn" class="btn">
+            测试2：JavaScript设置链接
+        </a>
+        
+        <!-- 测试按钮3：模拟原始逻辑 -->
+        <a href="#" id="simulateBtn" class="btn">
+            测试3：模拟原始updateWebsiteBtn逻辑
+        </a>
+        
+        <!-- 测试按钮4：强制新窗口 -->
+        <a href="#" id="forceNewWindow" class="btn">
+            测试4：强制新窗口打开
+        </a>
+        
+        <div class="debug" id="debugInfo">
+            调试信息将显示在这里...
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const debugDiv = document.getElementById('debugInfo');
+            debugDiv.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+        }
+
+        // 测试按钮2：JavaScript设置
+        document.getElementById('jsBtn').onclick = function(e) {
+            e.preventDefault();
+            log('测试2：JavaScript点击事件触发');
+            const url = 'https://www.your-company-domain.com';
+            log('尝试打开URL: ' + url);
+            try {
+                window.open(url, '_blank');
+                log('window.open调用成功');
+            } catch (error) {
+                log('window.open失败: ' + error.message);
+            }
+            return false;
+        };
+
+        // 测试按钮3：模拟原始逻辑
+        function updateWebsiteBtn(url) {
+            const btn = document.getElementById('simulateBtn');
+            log('updateWebsiteBtn调用，URL: ' + url);
+            
+            if (url && url.trim()) {
+                let finalUrl = url.trim();
+                if (finalUrl.indexOf('http') !== 0) {
+                    finalUrl = 'https://' + finalUrl;
+                }
+                log('最终URL: ' + finalUrl);
+                
+                btn.href = finalUrl;
+                btn.target = '_blank';
+                btn.textContent = '进入官网 (模拟)';
+                btn.style.opacity = '1';
+                btn.onclick = null;
+                
+                log('按钮属性设置完成 - href: ' + btn.href + ', target: ' + btn.target);
+            } else {
+                btn.href = '#';
+                btn.textContent = '暂无官网信息';
+                btn.style.opacity = '0.5';
+                btn.onclick = function(e) { 
+                    e.preventDefault(); 
+                    log('无效URL，阻止默认行为');
+                    return false; 
+                };
+            }
+        }
+
+        // 测试按钮4：强制新窗口
+        document.getElementById('forceNewWindow').onclick = function(e) {
+            e.preventDefault();
+            log('测试4：强制新窗口点击');
+            const url = 'https://www.your-company-domain.com';
+            
+            // 尝试多种方法
+            try {
+                // 方法1：window.open
+                const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+                if (newWindow) {
+                    log('方法1成功：window.open with features');
+                } else {
+                    log('方法1失败：window.open被阻止');
+                    
+                    // 方法2：创建临时链接
+                    const tempLink = document.createElement('a');
+                    tempLink.href = url;
+                    tempLink.target = '_blank';
+                    tempLink.rel = 'noopener noreferrer';
+                    document.body.appendChild(tempLink);
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
+                    log('方法2：临时链接点击');
+                }
+            } catch (error) {
+                log('所有方法都失败: ' + error.message);
+            }
+            return false;
+        };
+
+        // 页面加载完成后执行测试
+        window.onload = function() {
+            log('页面加载完成');
+            log('User Agent: ' + navigator.userAgent);
+            log('当前URL: ' + window.location.href);
+            
+            // 模拟原始逻辑
+            setTimeout(function() {
+                updateWebsiteBtn('https://www.your-company-domain.com');
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
