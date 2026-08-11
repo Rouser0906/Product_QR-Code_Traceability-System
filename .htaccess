@@ -1,0 +1,49 @@
+# Allow JSON file access
+<Files "*.json">
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Set JSON MIME types
+<FilesMatch "\.json$">
+    Header set Content-Type "application/json; charset=utf-8"
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</FilesMatch>
+
+# Allow cross-origin access
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# Cache settings
+<FilesMatch "\.json$">
+    ExpiresActive On
+    ExpiresDefault "access plus 1 hour"
+</FilesMatch>
+
+# Security settings - prevent directory listing
+Options -Indexes
+
+# URL rewrite rules
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # API resolve endpoint for scan compatibility
+    RewriteRule ^api/resolve$ api/resolve.php [L,QSA]
+    
+    # Rewrite product_display requests to api.php
+    RewriteRule ^product_display\.php$ api.php [L,QSA]
+    RewriteRule ^product_display\.html$ api.php [L,QSA]
+    
+    # If requesting non-existent files, try to handle via API
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^qr/([A-Za-z0-9_-]+\.json)$ api.php?file=$1 [L,QSA]
+</IfModule>
+
+# Force PHP files to execute
+<Files "*.php">
+    SetHandler application/x-httpd-php
+</Files>

@@ -1,0 +1,5 @@
+﻿blank_issues_enabled: false
+contact_links:
+  - name: 安全问题（私下报告）
+    url: https://github.com/Rouser0906/Product_QR-Code_Traceability-System/security/advisories/new
+    about: 发现安全漏洞？请私下报告，我们会尽快处理。

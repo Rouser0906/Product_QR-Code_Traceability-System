@@ -1,0 +1,72 @@
+{
+  "system": {
+    "name": "Your Product Name",
+    "version": "2.0.0",
+    "company": "Your Company Name",
+    "debug": false,
+    "auto_backup": {
+      "enabled": true,
+      "interval_hours": 24,
+      "retention_days": 30
+    }
+  },
+  "database": {
+    "backup_enabled": true,
+    "backup_interval_hours": 24,
+    "max_connections": 20,
+    "timeout_seconds": 60,
+    "pragma_settings": {
+      "journal_mode": "TRUNCATE",
+      "synchronous": "FULL",
+      "cache_size": 20000,
+      "temp_store": "memory",
+      "busy_timeout": 5000
+    }
+  },
+  "security": {
+    "session_timeout_hours": 24,
+    "max_login_attempts": 5,
+    "password_min_length": 8,
+    "require_strong_password": true,
+    "enable_audit_log": true
+  },
+  "qr_code": {
+    "default_size": 200,
+    "error_correction": "M",
+    "border": 4,
+    "format": "PNG",
+    "quality": 95
+  },
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0",
+    "timeout_seconds": 30
+  },
+  "ui": {
+    "theme": "light",
+    "language": "zh-CN",
+    "font_size": 12,
+    "auto_refresh_interval": 30,
+    "show_tooltips": true
+  },
+  "export": {
+    "default_format": "excel",
+    "include_metadata": true,
+    "date_format": "YYYY-MM-DD",
+    "encoding": "utf-8-sig"
+  },
+  "logging": {
+    "level": "INFO",
+    "max_file_size_mb": 100,
+    "max_files": 10,
+    "include_debug_info": false
+  },
+  "notifications": {
+    "email_enabled": false,
+    "email_server": "",
+    "email_port": 587,
+    "email_username": "",
+    "email_password": "",
+    "email_from": ""
+  }
+}

@@ -1,0 +1,16 @@
+# 打包时排除以下文件/目录（绿色便携版不包含）
+backups/
+scripts/hourly_project_backup.ps1
+scripts/hourly_project_backup.bat
+scripts/register_hourly_backup_task.ps1
+scripts/register_hourly_backup_task.bat
+scripts/healthcheck.ps1
+scripts/healthcheck.bat
+scripts/reset_ftp_creds.py
+scripts/server_setup_and_cleanup.bat
+scripts/register_cleanup_3years_task.ps1
+scripts/register_cleanup_3years_task.bat
+scripts/server_cleanup_3years.ps1
+scripts/server_cleanup_3years.bat
+0_register_hourly_backup.bat
+0_run_healthcheck.bat

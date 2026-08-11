@@ -1,0 +1,4 @@
+﻿示例集团多功能数智系统-产品溯源二维码发行和管理子系统（摘要）
+- 支持产品二维码生成、打印与溯源查询
+- 自动同步本地 JSON 到服务器 /companies/demo_json_a 与 /companies/demo_json_b
+- 基于 PyQt5 桌面端，绿色便携

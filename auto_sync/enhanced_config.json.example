@@ -1,0 +1,78 @@
+{
+    "sync_settings": {
+        "enabled": true,
+        "scan_interval_seconds": 15,
+        "max_concurrent_processes": 2,
+        "retry_attempts": 5,
+        "retry_delay_ms": 1000,
+        "retry_backoff_multiplier": 1.7,
+        "file_stability_check_ms": 300,
+        "overwrite_existing": false,
+        "delete_after_upload": false
+    },
+    "monitoring": {
+        "health_check_interval_seconds": 30,
+        "log_stale_threshold_seconds": 120,
+        "max_log_file_size_mb": 10,
+        "keep_log_files": 7,
+        "enable_metrics": true,
+        "enable_alerts": true,
+        "alert_sound": true
+    },
+    "ftp_connection": {
+        "host": "your-ftp-server.com",
+        "port": 21,
+        "username": "your_ftp_username",
+        "password": "your_ftp_password",
+        "use_passive": true,
+        "connection_timeout_ms": 10000,
+        "upload_timeout_ms": 30000,
+        "connection_test_interval_seconds": 300
+    },
+    "sync_tasks": [
+        {
+            "task_id": "company1_json_sync",
+            "company": "company1",
+            "local_directories": ["cloud/company1json", "companies/company1json"],
+            "remote_directory": "/companies/company1json",
+            "file_pattern": "*.json",
+            "enabled": true,
+            "priority": 1,
+            "max_files_per_batch": 50
+        },
+        {
+            "task_id": "company2_json_sync", 
+            "company": "company2",
+            "local_directories": ["cloud/company2json", "companies/company2json"],
+            "remote_directory": "/companies/company2json",
+            "file_pattern": "*.json",
+            "enabled": true,
+            "priority": 1,
+            "max_files_per_batch": 50
+        }
+    ],
+    "file_filters": {
+        "min_file_size_bytes": 10,
+        "max_file_size_mb": 5,
+        "exclude_patterns": ["*.tmp", "*.temp", "*~"],
+        "max_file_age_days": 365
+    },
+    "system_health": {
+        "min_free_disk_space_gb": 1,
+        "max_cpu_usage_percent": 80,
+        "max_memory_usage_mb": 512,
+        "critical_directories": [
+            "cloud/company1json",
+            "cloud/company2json", 
+            "auto_sync/logs",
+            "scripts"
+        ]
+    },
+    "recovery": {
+        "auto_restart_on_failure": true,
+        "max_restart_attempts": 3,
+        "restart_delay_seconds": 30,
+        "reset_counters_after_hours": 24,
+        "enable_safe_mode": true
+    }
+}

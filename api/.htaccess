@@ -1,0 +1,22 @@
+# 启用压缩
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE application/json text/html text/css text/javascript application/javascript
+</IfModule>
+
+# 浏览器缓存 5 分钟
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType application/json "access plus 5 minutes"
+</IfModule>
+
+# 允许跨域
+<IfModule mod_headers.c>
+  Header always set Access-Control-Allow-Origin "*"
+  Header always set Access-Control-Allow-Methods "GET"
+  Header always set Access-Control-Allow-Headers "Content-Type"
+</IfModule>
+
+# 隐藏 PHP 版本
+<IfModule mod_php.c>
+  php_value expose_php Off
+</IfModule>

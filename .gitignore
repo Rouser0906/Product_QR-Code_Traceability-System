@@ -1,0 +1,100 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+
+# Environments
+.venv/
+venv/
+scripts/venv/
+
+# Node
+node_modules/
+
+# IDE
+.vscode/
+.zed/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build/deploy artifacts
+deployment_assets/
+deployment_package/
+production_deploy_*/
+verification_url_backup_*/
+backups/
+backup_kiro/
+exports/
+imports/
+
+# Logs & cache (keep dirs)
+logs/*
+!logs/.gitkeep
+cache/*
+!cache/.gitkeep
+
+# QR local data (historical)
+qr/data/
+qr/*.json
+
+# Rovo Dev temp/trash (auto-clean & ignore)
+tmp_dev_*/
+tmp_dev_trash_*/
+
+# SQLite sidecar (transient)
+*.db-shm
+*.db-wal
+
+# App database (do not commit)
+qr_system.db
+
+# Sensitive configuration files (do not commit)
+config/ftp_config.json
+auto_sync/config.json
+auto_sync/enhanced_config.json
+api/db_config.php
+api/api_config.php
+scripts/ftp_credentials.ps1
+
+# Build artifacts (PyInstaller)
+build/
+
+# UI screenshots (may contain real data)
+PIC_LS/
+
+# Brand assets (may contain real logos)
+assets/demo_logo_a.png
+assets/demo_logo_b.png
+assets/*透明.png
+
+# Python build output
+dist/
+*.spec.bak
+*.exe
+
+# Database backups
+*.db.bak
+*.db.backup
+qr_system_backup.db
+
+# Windows reserved name artifact (if present)
+nul
+
+# --- hardened 2026-08-12 (pre-public-release safety) ---
+# Local backup snapshots (may hold real DB copies)
+tmp_rovodev_*/
+tmp_rovodev_backup/
+# Blanket: any SQLite database
+*.db
+# IDE / AI-tool local metadata
+.codeartsdoer/
+# Logs
+*.log
+# Local-only config overrides
+config/*.local.*

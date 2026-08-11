@@ -1,0 +1,13 @@
+<?php
+/**
+ * 数据库配置文件示例
+ * 请复制此文件为 db_config.php 并填入实际配置
+ */
+
+return [
+    'host' => 'localhost',
+    'dbname' => 'your_database_name',
+    'username' => 'your_database_username',
+    'password' => 'your_database_password',
+    'charset' => 'utf8mb4'
+];

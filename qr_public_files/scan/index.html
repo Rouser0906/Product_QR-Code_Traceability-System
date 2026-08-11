@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>扫码结果 · 无感秒开</title>
+  <link rel="preconnect" href="https://example.com" crossorigin>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:#fff;color:#222}
+    .container{padding:16px;max-width:720px;margin:0 auto}
+    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 1px 8px #0001}
+    .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee}
+    .row:last-child{border-bottom:none}
+    .label{color:#666}
+    .val{font-weight:600}
+    .btn{margin-top:16px;display:block;width:100%;padding:14px 18px;background:#16a34a;color:#fff;border:none;border-radius:10px;font-size:16px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="card">
+      <div class="row"><div class="label">二维码编号</div><div class="val" id="qrno">加载中…</div></div>
+      <div class="row"><div class="label">公司名称</div><div class="val" id="company">加载中…</div></div>
+      <div class="row"><div class="label">产品类型</div><div class="val" id="ptype">加载中…</div></div>
+      <div class="row"><div class="label">规格/颜色/特性</div><div class="val" id="spec">加载中…</div></div>
+      <div class="row"><div class="label">生产批次/日期</div><div class="val" id="prod">加载中…</div></div>
+      <div class="row"><div class="label">经销商/电话</div><div class="val" id="dist">加载中…</div></div>
+      <div class="row"><div class="label">执行标准/备注</div><div class="val" id="std">加载中…</div></div>
+      <button class="btn" id="go">访问官网（无缝跳转）</button>
+    </div>
+  </div>
+  <script>
+    const pathToken = location.pathname.split('/').filter(Boolean)[1];
+    const queryId = new URLSearchParams(location.search).get('id');
+    const id = pathToken || queryId;
+    const endpoint = `/api/resolve?id=${encodeURIComponent(id)}`;
+    fetch(endpoint, { cache: 'force-cache' })
+      .then(r => r.json())
+      .then(d => {
+        const s = v => (v ?? '').toString();
+        document.getElementById('qrno').textContent = s(d.qrcNo || d.qrSequence);
+        document.getElementById('company').textContent = s(d.companyName);
+        document.getElementById('ptype').textContent = s(d.productType);
+        document.getElementById('spec').textContent = [d.productSpec, d.productColor, d.productFeature].filter(Boolean).join(' / ');
+        document.getElementById('prod').textContent = [d.batchNumber, d.productionDate].filter(Boolean).join(' / ');
+        document.getElementById('dist').textContent = [d.distributorName, d.phone].filter(Boolean).join(' / ');
+        document.getElementById('std').textContent = [d.standard, d.remark].filter(Boolean).join(' / ');
+        const companyUrl = s(d.companyUrl);
+        document.getElementById('go').onclick = () => { if (companyUrl) location.href = companyUrl; };
+      })
+      .catch(() => {
+        document.getElementById('card').innerHTML = '<p>抱歉，暂时无法解析二维码信息，请稍后重试。</p>';
+      });
+  </script>
+</body>
+</html>

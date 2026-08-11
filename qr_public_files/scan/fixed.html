@@ -1,0 +1,429 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>产品溯源信息 · scan.example.com</title>
+  <style>
+    body{
+      margin:0;
+      font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color:#333;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .container{
+      flex:1;
+      padding:12px;
+      max-width:420px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+    }
+    .header{
+      background:rgba(255,255,255,0.95);
+      border-radius:12px 12px 0 0;
+      padding:16px;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .header .title{
+      font-size:18px;
+      font-weight:700;
+      color:#1a365d;
+      margin-bottom:8px;
+    }
+    .header .subtitle{
+      font-size:14px;
+      color:#4a5568;
+      margin-bottom:4px;
+    }
+    .header .domain{
+      font-size:12px;
+      color:#718096;
+      font-weight:500;
+    }
+    .content{
+      background:rgba(255,255,255,0.98);
+      padding:0;
+      flex:1;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .info-section{
+      padding:16px;
+    }
+    .section-title{
+      font-size:16px;
+      font-weight:600;
+      color:#2d3748;
+      margin-bottom:12px;
+      padding-bottom:8px;
+      border-bottom:2px solid #e2e8f0;
+    }
+    .info-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      padding:10px 0;
+      border-bottom:1px solid #f7fafc;
+      min-height:20px;
+    }
+    .info-row:last-child{
+      border-bottom:none;
+    }
+    .info-label{
+      color:#4a5568;
+      font-size:14px;
+      font-weight:500;
+      text-align:left;
+      flex-shrink:0;
+      width:85px;
+      line-height:1.4;
+    }
+    .info-value{
+      color:#1a202c;
+      font-size:14px;
+      font-weight:600;
+      text-align:right;
+      flex:1;
+      word-break:break-all;
+      line-height:1.4;
+      margin-left:8px;
+    }
+    .highlight{
+      color:#2b6cb0;
+      font-weight:700;
+    }
+    .status-pass{
+      color:#38a169;
+      font-weight:700;
+    }
+    .footer{
+      background:rgba(255,255,255,0.95);
+      border-radius:0 0 12px 12px;
+      padding:16px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .btn{
+      display:block;
+      width:100%;
+      padding:14px;
+      background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      font-weight:600;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(102,126,234,0.4);
+      transition:all 0.3s ease;
+      margin:0 auto 12px auto;
+      box-sizing:border-box;
+    }
+    .btn:active{
+      transform:translateY(2px);
+      box-shadow:0 2px 6px rgba(102,126,234,0.4);
+    }
+    .copyright{
+      font-size:11px;
+      color:#718096;
+      text-align:center;
+      line-height:1.3;
+    }
+    .loading{
+      text-align:center;
+      padding:40px 20px;
+      color:#4a5568;
+      font-size:16px;
+    }
+    .error{
+      color:#e53e3e;
+      text-align:center;
+      padding:20px;
+      background:rgba(254,226,226,0.8);
+      border-radius:8px;
+      margin:16px;
+    }
+    .parse-indicator{
+      background:rgba(56,161,105,0.1);
+      color:#38a169;
+      padding:8px 12px;
+      border-radius:6px;
+      font-size:12px;
+      text-align:center;
+      margin-bottom:16px;
+      border:1px solid rgba(56,161,105,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">●产品溯源.示例城市</div>
+      <div class="subtitle">正品保证.一物一码.全程可溯</div>
+      <div class="domain">scan.example.com</div>
+    </div>
+    <div class="content" id="content">
+      <div class="loading">正在解析产品信息...</div>
+    </div>
+    <div class="footer">
+      <a class="btn" href="#" id="websiteBtn">进入官网</a>
+      <div class="copyright" id="copyright">C2025[已脱敏城市]示例品牌B材料有限公司.科技赋能.安全溯源</div>
+    </div>
+  </div>
+  
+  <script>
+    // 内置产品数据库
+    var productDB = {
+      'HS-DEMO-000008704': {
+        qr_sequence: 'HS-DEMO-000008704',
+        company_name: '[已脱敏城市]示例品牌B材料有限公司',
+        official_website: 'https://www.example.com',
+        product_type: '聚氨酯保温板',
+        product_spec: '1200×600×50mm',
+        product_feature: '阻燃B1级',
+        product_color: '白色',
+        plate_number: '京A12345',
+        phone: '13800000001',
+        production_date: '2025-09-20',
+        batch_number: 'HS20250920001',
+        quality_status: '合格',
+        issuer_code: 'HS001',
+        standard: 'GB/T 17794-2008',
+        distributor_name: '示例经销商',
+        remark: '防火保温材料'
+      },
+      'HS-DEMO-000008705': {
+        qr_sequence: 'HS-DEMO-000008705',
+        company_name: '[已脱敏城市]示例品牌B材料有限公司',
+        official_website: 'https://www.example.com',
+        product_type: '岩棉保温板',
+        product_spec: '1200×600×80mm',
+        product_feature: '防火A级',
+        product_color: '灰色',
+        plate_number: '京A67890',
+        phone: '13800000002',
+        production_date: '2025-09-21',
+        batch_number: 'HS20250921002',
+        quality_status: '合格',
+        issuer_code: 'HS002',
+        standard: 'GB/T 25975-2010',
+        distributor_name: '广州经销商',
+        remark: '高温防火材料'
+      }
+    };
+
+    // 获取URL参数
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get('code') || params.get('id');
+    var textData = params.get('text') || params.get('data') || params.get('content');
+    
+    // 启动解析
+    setTimeout(function() {
+      if (textData) {
+        parseTextContent(textData);
+      } else if (code) {
+        loadByCode(code);
+      } else {
+        showError('缺少产品代码或二维码内容参数');
+      }
+    }, 500);
+    
+    function loadByCode(productCode) {
+      // 优先从服务器API获取真实数据
+      tryLoadFromAPI(productCode);
+    }
+    
+    function tryLoadFromAPI(productCode) {
+      // 确定公司类型和文件路径
+      var companyType = productCode.indexOf('HS-Q') === 0 ? 'demo_json_a' : 'demo_json_b';
+      var jsonUrl = '/companies/' + companyType + '/' + productCode + '.json';
+      
+      fetch(jsonUrl, {
+        method: 'GET',
+        cache: 'no-cache'
+      })
+      .then(function(response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('JSON文件不存在或无法访问: ' + response.status);
+        }
+      })
+      .then(function(data) {
+        if (data) {
+          renderProduct(data, '服务器JSON文件');
+        } else {
+          throw new Error('JSON数据为空');
+        }
+      })
+      .catch(function(error) {
+        console.log('JSON文件读取失败:', error);
+        // JSON文件读取失败，尝试本地数据库
+        var localData = productDB[productCode];
+        if (localData) {
+          renderProduct(localData, '本地数据库（服务器文件不可用）');
+        } else {
+          showError('产品信息未找到：' + productCode + '<br><br>尝试的文件路径：' + jsonUrl + '<br>错误详情：' + error.message);
+        }
+      });
+    }
+    
+    function parseTextContent(text) {
+      try {
+        var parts = [];
+        if (text.indexOf('；') > -1) {
+          parts = text.split('；');
+        } else if (text.indexOf(';') > -1) {
+          parts = text.split(';');
+        } else if (text.indexOf('|') > -1) {
+          parts = text.split('|');
+        } else {
+          parts = text.split(',');
+        }
+        
+        parts = parts.map(function(p) { return p.trim(); }).filter(function(p) { return p; });
+        
+        // 放宽字段数量要求，至少需要3个字段（公司名称、官网、产品类型）
+        if (parts.length < 3) {
+          throw new Error('二维码格式不正确，字段数量不足（当前' + parts.length + '个字段，至少需要3个）');
+        }
+        
+        var productData = {
+          company_name: parts[0] || '',
+          official_website: parts[1] || '',
+          product_type: parts[2] || '',
+          product_spec: parts[3] || '',
+          product_feature: parts[4] || '',
+          product_color: parts[5] || '',
+          plate_number: parts[6] || '',
+          phone: parts[7] || '',
+          production_date: parts[8] || '',
+          batch_number: parts[9] || '',
+          quality_status: parts[10] || '合格',
+          qr_sequence: parts[11] || '',
+          issuer_code: parts[12] || '',
+          standard: parts[13] || '',
+          distributor_name: parts[14] || '',
+          remark: parts[15] || ''
+        };
+        
+        renderProduct(productData, '文本解析（' + parts.length + '个字段）');
+        
+      } catch (error) {
+        showError('二维码内容解析失败：' + error.message + '<br><br>原始内容：' + text + '<br>字段数量：' + (parts ? parts.length : 0));
+      }
+    }
+    
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      // 如果包含时间部分，只取日期部分
+      if (dateString.indexOf(' ') > -1) {
+        return dateString.split(' ')[0];
+      }
+      return dateString;
+    }
+
+    function renderProduct(data, source) {
+      updateHeader(data.company_name);
+      
+      var html = '<div class="info-section">' +
+        '<div class="info-row"><div class="info-label">二维码序号</div><div class="info-value highlight">' + (data.qr_sequence || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">公司名称</div><div class="info-value">' + (data.company_name || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">产品名称</div><div class="info-value">' + (data.product_type || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">产品规格</div><div class="info-value">' + (data.product_spec || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">产品特性</div><div class="info-value">' + (data.product_feature || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">产品颜色</div><div class="info-value">' + (data.product_color || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">生产日期</div><div class="info-value">' + formatDate(data.production_date || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">产品批次号</div><div class="info-value">' + (data.batch_number || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">出厂检验</div><div class="info-value status-pass">' + (data.quality_status || '合格') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">物流车牌</div><div class="info-value">' + (data.plate_number || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">业务员电话</div><div class="info-value">' + (data.phone || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">执行标准</div><div class="info-value">' + (data.standard || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">经销商名称</div><div class="info-value">' + (data.distributor_name || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">发行者工号</div><div class="info-value">' + (data.issuer_name || data.issuer_code || '') + '</div></div>' +
+        '<div class="info-row"><div class="info-label">备注</div><div class="info-value">' + (data.remark || '') + '</div></div>' +
+        '</div>';
+      
+      document.getElementById('content').innerHTML = html;
+      updateWebsiteBtn(data.official_website);
+    }
+    
+    function showError(message) {
+      document.getElementById('content').innerHTML = '<div class="error"><p>' + message + '</p></div>';
+    }
+    
+    function updateHeader(companyName) {
+      var title = document.querySelector('.header .title');
+      var copyright = document.getElementById('copyright');
+      
+      if (companyName && (companyName.indexOf('示例') > -1 || companyName.indexOf('ZY') > -1)) {
+        title.textContent = '●产品溯源.示例品牌A';
+        copyright.textContent = 'C2025[已脱敏城市]示例品牌A有限公司.安全溯源';
+      } else {
+        title.textContent = '●产品溯源.示例城市';
+        copyright.textContent = 'C2025[已脱敏城市]示例品牌B材料有限公司.科技赋能.安全溯源';
+      }
+    }
+    
+    function updateWebsiteBtn(url) {
+      var btn = document.getElementById('websiteBtn');
+      if (url && url.trim()) {
+        var finalUrl = url.trim();
+        // 修正特定网站的协议问题
+        if (finalUrl === 'https://www.your-company-domain.com') {
+          finalUrl = 'http://www.your-company-domain.com/';
+        }
+        
+        // 清除所有现有的事件处理器
+        btn.onclick = null;
+        btn.removeAttribute('onclick');
+        
+        // 设置按钮属性
+        btn.href = finalUrl;
+        btn.target = '_blank';
+        btn.rel = 'noopener noreferrer';
+        btn.textContent = '进入官网';
+        btn.style.opacity = '1';
+        
+        // 添加强制跳转的点击事件
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          console.log('官网按钮被点击，URL:', finalUrl);
+          
+          // 尝试多种方法打开链接
+          try {
+            // 方法1：window.open
+            var newWindow = window.open(finalUrl, '_blank', 'noopener,noreferrer');
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+              // 方法2：创建临时链接并点击
+              var tempLink = document.createElement('a');
+              tempLink.href = finalUrl;
+              tempLink.target = '_blank';
+              tempLink.rel = 'noopener noreferrer';
+              tempLink.style.display = 'none';
+              document.body.appendChild(tempLink);
+              tempLink.click();
+              document.body.removeChild(tempLink);
+            }
+          } catch (error) {
+            console.error('打开官网失败:', error);
+            // 方法3：直接跳转
+            window.location.href = finalUrl;
+          }
+          return false;
+        });
+        
+      } else {
+        btn.href = '#';
+        btn.textContent = '暂无官网信息';
+        btn.style.opacity = '0.5';
+        btn.onclick = function(e) { e.preventDefault(); return false; };
+      }
+    }
+  </script>
+</body>
+</html>
