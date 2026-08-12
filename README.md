@@ -160,6 +160,7 @@ python build_PT-QRC.py        # 或 quick_build.bat
 
 <table><tr>
 <td align="center"><img src="assets/wechat_qr.png" width="220" alt="微信收款码"/><br/><sub>微信</sub></td>
+<td><img src="assets/spacer.png" width="300" height="4" alt=" "/></td>
 <td align="center"><img src="assets/alipay_qr.png" width="220" alt="支付宝收款码"/><br/><sub>支付宝</sub></td>
 </tr></table>
 
