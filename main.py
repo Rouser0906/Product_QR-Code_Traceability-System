@@ -9,6 +9,20 @@ import sys
 import os
 import threading
 import logging
+# --- frozen/console-safe stdout/stderr: 防止无控制台(windowed)或 GBK 控制台下 emoji 打印崩溃 ---
+try:
+    import io as _io
+    if sys.stdout is None:
+        sys.stdout = _io.StringIO()
+    if sys.stderr is None:
+        sys.stderr = _io.StringIO()
+    for _s in (sys.stdout, sys.stderr):
+        try:
+            _s.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+except Exception:
+    pass
 # 运行时路径修复，确保 EXE/源码环境均可稳定导入
 try:
     from utils.runtime_paths import ensure_runtime_paths

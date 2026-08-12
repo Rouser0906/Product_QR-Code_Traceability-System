@@ -156,8 +156,14 @@ class AutoSyncService:
     def setup_logging(self) -> None:
         """设置日志系统 - 优化版本"""
         # Use a unified log directory so service and console runs write to the same place
-        log_dir = Path("auto_sync") / "logs"
-        log_dir.mkdir(exist_ok=True)
+        # frozen-safe: 冻结版取 exe 同级目录，源码版取项目根；建父目录
+        import sys as _sys
+        if getattr(_sys, "frozen", False):
+            _base = Path(_sys.executable).parent
+        else:
+            _base = Path(__file__).resolve().parent.parent
+        log_dir = _base / "auto_sync" / "logs"
+        log_dir.mkdir(parents=True, exist_ok=True)
         
         # 配置文件日志 - 保留详细信息
         file_handler = logging.FileHandler(log_dir / 'auto_sync.log', encoding='utf-8')
