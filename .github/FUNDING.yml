@@ -1,0 +1,8 @@
+# GitHub "Sponsor" 按钮配置（仓库页右上角）。
+# 当前：custom 指向仓库内赞助页（微信/支付宝收款码）。
+# 待其他平台开通后，在下面的 custom 列表里取消注释并填入你的链接（可同时存在多个按钮）。
+custom:
+  - https://github.com/Rouser0906/Product_QR-Code_Traceability-System/blob/main/docs/SPONSOR.md
+  # - https://afdian.net/a/你的用户名            # 爱发电（月度订阅）—— 修通后取消注释并填入
+  # - https://www.buymeacoffee.com/你的用户名     # Buy Me a Coffee —— 开通后取消注释并填入
+# github: Rouser0906                              # GitHub Sponsors（通过审核后取消注释启用）

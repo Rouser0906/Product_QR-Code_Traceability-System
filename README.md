@@ -154,6 +154,17 @@ python build_PT-QRC.py        # 或 quick_build.bat
 - **FTP 同步失败？** 核对 `config/ftp_config.json`、网络、防火墙；查看 `scripts/` 告警看板。
 - **二维码扫不开？** 检查 `verification_url` 域名、PHP API 是否可达、对应 JSON 是否已同步到服务器目录。
 
+## 赞助
+
+如果这个项目帮到了你，欢迎请作者喝杯茶 ☕（微信 / 支付宝）：
+
+<table><tr>
+<td align="center"><img src="assets/wechat_qr.png" width="220" alt="微信收款码"/><br/><sub>微信</sub></td>
+<td align="center"><img src="assets/alipay_qr.jpg" width="220" alt="支付宝收款码"/><br/><sub>支付宝</sub></td>
+</tr></table>
+
+详见 [docs/SPONSOR.md](docs/SPONSOR.md)。
+
 ## 许可证与贡献
 
 - [Apache-2.0](LICENSE)
