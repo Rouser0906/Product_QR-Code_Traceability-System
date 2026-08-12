@@ -98,3 +98,6 @@ tmp_rovodev_backup/
 *.log
 # Local-only config overrides
 config/*.local.*
+
+# design source files (local only)
+*.pptx
