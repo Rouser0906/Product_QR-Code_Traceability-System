@@ -78,8 +78,8 @@ function Show-AlertDashboard {
 
     # 5. 检查文件队列
     $aCount = if (Test-Path "cloud\demo_json_a") { (Get-ChildItem "cloud\demo_json_a" -Filter "*.json").Count } else { 0 }
-    $zyCount = if (Test-Path "cloud\demo_json_b") { (Get-ChildItem "cloud\demo_json_b" -Filter "*.json").Count } else { 0 }
-    $totalQueue = $aCount + $zyCount
+    $bCount = if (Test-Path "cloud\demo_json_b") { (Get-ChildItem "cloud\demo_json_b" -Filter "*.json").Count } else { 0 }
+    $totalQueue = $aCount + $bCount
     $queueStatus = if ($totalQueue -lt 50) { "正常" } elseif ($totalQueue -lt 100) { "较高" } else { "过高" }
     $queueColor = if ($totalQueue -lt 50) { "Green" } elseif ($totalQueue -lt 100) { "Yellow" } else { "Red" }
     Write-Host "  📁 文件队列: $queueStatus ($totalQueue个)" -ForegroundColor $queueColor

@@ -8,7 +8,7 @@
           <match url="^index\.html$" ignoreCase="true" />
           <conditions logicalGrouping="MatchAny">
             <add input="{HTTP_HOST}" pattern="^scan\.example\.com$" />
-            <add input="{QUERY_STRING}" pattern="(^|&)id=(A|B)-Q\d{9}(&|$)" />
+            <add input="{QUERY_STRING}" pattern="(^|&)id=(B|A)-Q\d{9}(&|$)" />
           </conditions>
           <action type="Redirect" url="https://example-brand-a.com/index.html?code={C:2}-{R:0}" redirectType="Permanent" />
         </rule>

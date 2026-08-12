@@ -148,16 +148,16 @@ function Test-QueueAlert {
         }).Count 
     } else { 0 }
     
-    $zyCount = if (Test-Path "cloud\demo_json_b") { 
+    $bCount = if (Test-Path "cloud\demo_json_b") { 
         (Get-ChildItem "cloud\demo_json_b" -Filter "*.json" | Where-Object { 
             $_.LastWriteTime -gt (Get-Date).AddHours(-2) 
         }).Count 
     } else { 0 }
     
-    $totalQueue = $aCount + $zyCount
+    $totalQueue = $aCount + $bCount
     
     if ($totalQueue -gt 150) {  # 超过150个文件告警
-        $message = "文件队列过长: $totalQueue 个文件 (A:$aCount, B:$zyCount)"
+        $message = "文件队列过长: $totalQueue 个文件 (A:$aCount, B:$bCount)"
         Write-AlertLog $message "ALERT"
         Send-SystemAlert "QueueHigh" $message
         return $true
@@ -301,8 +301,8 @@ function Show-AlertStatus {
     
     # 文件队列
     $aCount = if (Test-Path "cloud\demo_json_a") { (Get-ChildItem "cloud\demo_json_a" -Filter "*.json").Count } else { 0 }
-    $zyCount = if (Test-Path "cloud\demo_json_b") { (Get-ChildItem "cloud\demo_json_b" -Filter "*.json").Count } else { 0 }
-    $totalQueue = $aCount + $zyCount
+    $bCount = if (Test-Path "cloud\demo_json_b") { (Get-ChildItem "cloud\demo_json_b" -Filter "*.json").Count } else { 0 }
+    $totalQueue = $aCount + $bCount
     Write-Host "  文件队列: $totalQueue 个" -ForegroundColor $(if($totalQueue -lt 100){'Green'}elseif($totalQueue -lt 150){'Yellow'}else{'Red'})
 }
 

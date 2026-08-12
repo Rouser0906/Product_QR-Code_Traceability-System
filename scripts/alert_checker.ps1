@@ -67,8 +67,8 @@ function Check-SystemHealth {
     
     # 5. 检查文件队列
     $aCount = if (Test-Path "cloud\demo_json_a") { (Get-ChildItem "cloud\demo_json_a" -Filter "*.json").Count } else { 0 }
-    $zyCount = if (Test-Path "cloud\demo_json_b") { (Get-ChildItem "cloud\demo_json_b" -Filter "*.json").Count } else { 0 }
-    $totalQueue = $aCount + $zyCount
+    $bCount = if (Test-Path "cloud\demo_json_b") { (Get-ChildItem "cloud\demo_json_b" -Filter "*.json").Count } else { 0 }
+    $totalQueue = $aCount + $bCount
     
     if ($totalQueue -gt 200) {
         $alerts += "WARNING: 文件队列过长 $totalQueue 个文件"

@@ -357,16 +357,16 @@ function Test-FileQueueAlert {
             }).Count 
         } else { 0 }
         
-        $zyCount = if (Test-Path "cloud\demo_json_b") { 
+        $bCount = if (Test-Path "cloud\demo_json_b") { 
             (Get-ChildItem "cloud\demo_json_b" -Filter "*.json" | Where-Object { 
                 $_.LastWriteTime -gt (Get-Date).AddHours(-2) 
             }).Count 
         } else { 0 }
         
-        $totalQueue = $aCount + $zyCount
+        $totalQueue = $aCount + $bCount
         
         if ($totalQueue -gt $config.threshold_count) {
-            $message = "待上传文件队列过长: $totalQueue 个文件 (A:$aCount, B:$zyCount)"
+            $message = "待上传文件队列过长: $totalQueue 个文件 (A:$aCount, B:$bCount)"
             Send-Alert "file_queue_overflow" $message $config
             return $true
         }

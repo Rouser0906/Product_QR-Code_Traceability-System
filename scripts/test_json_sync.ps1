@@ -40,14 +40,14 @@ Start-Sleep -Seconds 5
 
 # 检查结果
 $aTarget = "C:\inetpub\qr-system\companies\demo_json_a\test_a_$timestamp.json"
-$zyTarget = "C:\inetpub\qr-system\companies\demo_json_b\test_b_$timestamp.json"
+$bTarget = "C:\inetpub\qr-system\companies\demo_json_b\test_b_$timestamp.json"
 
 $aSuccess = Test-Path $aTarget
-$zySuccess = Test-Path $zyTarget
+$bSuccess = Test-Path $bTarget
 
 Write-Host "测试结果:" -ForegroundColor Cyan
 Write-Host "  A同步: $(if($aSuccess){'成功'}else{'失败'}) - $aTarget" -ForegroundColor $(if($aSuccess){'Green'}else{'Red'})
-Write-Host "  B同步: $(if($zySuccess){'成功'}else{'失败'}) - $zyTarget" -ForegroundColor $(if($zySuccess){'Green'}else{'Red'})
+Write-Host "  B同步: $(if($bSuccess){'成功'}else{'失败'}) - $bTarget" -ForegroundColor $(if($bSuccess){'Green'}else{'Red'})
 
 # 显示最新日志
 if (Test-Path $logFile) {
@@ -55,7 +55,7 @@ if (Test-Path $logFile) {
   Get-Content -Path $logFile -Tail 10 | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
 }
 
-if ($aSuccess -and $zySuccess) {
+if ($aSuccess -and $bSuccess) {
   Write-Host "✓ 所有测试通过！JSON自动同步功能正常运行" -ForegroundColor Green
 } else {
   Write-Host "✗ 测试失败，请检查守护进程状态和日志" -ForegroundColor Red

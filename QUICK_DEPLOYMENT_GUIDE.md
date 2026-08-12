@@ -21,7 +21,7 @@
 ### 1. 获取代码
 ```bash
 git clone <your-bitbucket-repo-url>
-cd PT_QRC-SYS
+cd B_PT_QRC-SYS
 ```
 
 ### 2. 配置敏感信息
@@ -174,7 +174,7 @@ python scripts/db_inspect.py
 ## 📁 目录结构说明
 
 ```
-PT_QRC-SYS/
+B_PT_QRC-SYS/
 ├── config/                 # 配置文件目录
 │   ├── ftp_config.json    # FTP配置（需要手动创建）
 │   └── system_config.json # 系统配置

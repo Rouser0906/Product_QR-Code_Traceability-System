@@ -302,7 +302,7 @@ try {
     }
     
     // 验证二维码格式
-    if (!preg_match('/^(A|B)-Q\d{9}$/', $sn)) {
+    if (!preg_match('/^(B|A)-Q\d{9}$/', $sn)) {
         json_response(false, null, '无效的二维码格式', 'INVALID_QR_FORMAT');
     }
     

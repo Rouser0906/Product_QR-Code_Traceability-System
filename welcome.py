@@ -32,7 +32,7 @@ class WelcomeWindow(QWidget):
                 qapp.quit()
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("B·A·PTQRCs - 欢迎页面")
+        self.setWindowTitle("PTQRCs - 欢迎页面")
         self.setMinimumSize(1200, 700)
         self.setStyleSheet("background: white;")
         self.initUI()

@@ -87,11 +87,11 @@ function Get-UploadQueueSize {
         (Get-ChildItem "cloud\demo_json_a" -Filter "*.json" | Where-Object { $_.LastWriteTime -gt (Get-Date).AddMinutes(-10) }).Count 
     } else { 0 }
     
-    $zyCount = if (Test-Path "cloud\demo_json_b") { 
+    $bCount = if (Test-Path "cloud\demo_json_b") { 
         (Get-ChildItem "cloud\demo_json_b" -Filter "*.json" | Where-Object { $_.LastWriteTime -gt (Get-Date).AddMinutes(-10) }).Count 
     } else { 0 }
     
-    return $aCount + $zyCount
+    return $aCount + $bCount
 }
 
 function Get-UploadPerformance {
