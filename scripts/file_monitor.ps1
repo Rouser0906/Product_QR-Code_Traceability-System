@@ -7,7 +7,7 @@ Write-Host "Press Ctrl+C to stop service" -ForegroundColor Yellow
 Write-Host "========================================" -ForegroundColor Green
 
 # Server configuration
-$FtpServer = "10.0.0.100"
+$FtpServer = "192.0.2.100"
 $FtpUser = "your_ftp_username"
 $FtpPassword = "[REDACTED-FTP-PASSWORD]"
 

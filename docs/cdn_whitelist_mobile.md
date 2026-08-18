@@ -8,7 +8,7 @@
 ## 必须加白名单
 | 类型 | 值 | 备注 |
 |---|---|---|
-| 出口 IP（脚本） | 10.0.0.200/32 | 当前办公网络 |
+| 出口 IP（脚本） | 198.51.100.200/32 | 当前办公网络 |
 | 移动端常用段 | 198.51.100.0/24 | 示例，可按实际调整 |
 | UA 关键词 | *Chrome* / *Safari* / *Mobile* | 允许移动端 UA |
 | 目标域名 | scan.example.com | 443 端口 |
@@ -17,19 +17,19 @@
 ### Cloudflare
 ```bash
 # 安装 cfctl 后
-cfctl waf rules create --zone scan.example.com --action allow --ip 10.0.0.200/32 --note "example-sync-bot"
+cfctl waf rules create --zone scan.example.com --action allow --ip 198.51.100.200/32 --note "example-sync-bot"
 ```
 
 ### 阿里云（CLI）
 ```bash
 aliyun waf OpenAPI --RegionId cn-hangzhou --Domain scan.example.com \
-  --RuleType ip --RuleAction allow --RuleContent 10.0.0.200/32
+  --RuleType ip --RuleAction allow --RuleContent 198.51.100.200/32
 ```
 
 ### 腾讯云（CLI）
 ```bash
 tccli cdn UpdateDomainConfig --Domain scan.example.com \
-  --IpFilter.IpFilterType allow --IpFilter.IpList ["10.0.0.200/32"]
+  --IpFilter.IpFilterType allow --IpFilter.IpList ["198.51.100.200/32"]
 ```
 
 ## 验证步骤

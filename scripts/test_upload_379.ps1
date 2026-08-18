@@ -1,10 +1,10 @@
 ﻿Write-Host "Testing upload of A-DEMO-000009379.json..." -ForegroundColor Yellow
 
-$FtpServer = "10.0.0.100"
+$FtpServer = "192.0.2.100"
 $FtpUser = "your_ftp_username"
 $FtpPassword = "[REDACTED-FTP-PASSWORD]"
 $LocalFile = "C:\Projects\Demo\cloud\demo_json_a\A-DEMO-000009379.json"
-$RemoteUrl = "ftp://10.0.0.100/companies/demo_json_a/A-DEMO-000009379.json"
+$RemoteUrl = "ftp://192.0.2.100/companies/demo_json_a/A-DEMO-000009379.json"
 
 try {
     if (Test-Path $LocalFile) {
