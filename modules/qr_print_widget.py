@@ -340,8 +340,8 @@ class QRPrintWidget(QWidget):
         self.quantity_edit.setStyleSheet(edit_style + "padding-right:32px;")
         self.quantity_edit.setFixedHeight(48)
         self.quantity_edit.setMinimumWidth(180)
-        self.quantity_edit.setPlaceholderText("GB/T10801.2-2018")
-        self.quantity_edit.setText("GB/T10801.2-2018")
+        self.quantity_edit.setPlaceholderText("GB/T XXXXX-XXXX")
+        self.quantity_edit.setText("GB/T XXXXX-XXXX")
         qty_layout.addWidget(qty_label)
         qty_layout.addWidget(self.quantity_edit, 1)
 
@@ -966,10 +966,10 @@ class QRPrintWidget(QWidget):
                     assets_candidates = [os.path.join(base_dir, 'assets')]
                 
                 # 根据公司名称匹配logo文件（支持中文名与英文别名）
-                if '示例' in company_name or '示例品牌A' in company_name:
-                    logo_names = ['示例品牌A 透明.png', 'demo_logo_b.png']
-                elif '示例' in company_name or '示例品牌B' in company_name:
-                    logo_names = ['示例品牌B 透明.png', 'demo_logo_a.png']
+                if '示例' in company_name or '示例单位A' in company_name:
+                    logo_names = ['示例单位A 透明.png', 'demo_logo_b.png']
+                elif '示例' in company_name or '示例单位B' in company_name:
+                    logo_names = ['示例单位B 透明.png', 'demo_logo_a.png']
                 else:
                     logo_names = []
                 
@@ -1633,9 +1633,9 @@ class QRPrintWidget(QWidget):
             return full_company_name
             
         # 根据需求简化公司名称
-        if "[已脱敏城市]示例品牌B材料有限公司" in full_company_name:
+        if "示例单位B" in full_company_name:
             return "示例城市"
-        elif "[已脱敏城市]示例品牌A有限公司" in full_company_name:
+        elif "示例单位A" in full_company_name:
             return "示例城市"
         else:
             # 对于其他公司，保持原名或进行通用简化
@@ -1936,19 +1936,19 @@ class QRPrintWidget(QWidget):
                 self.widgets_col2[4].setText(f"{auto_prefix}001")
             
             # 获取15项信息
-            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "[已脱敏城市]示例品牌A有限公司"
+            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "示例单位A"
             # 根据选择的公司名称动态获取公司网址
             company_website = self.get_company_website(company_name)
             product_type = self.combos_col1[3].currentText() if len(self.combos_col1) > 3 else "XPS-A1"
             product_spec = self.combos_col1[4].currentText() if len(self.combos_col1) > 4 else "30mm"
             product_feature = self.combos_col1[5].currentText() if len(self.combos_col1) > 5 else "保温隔热"
             product_color = self.combos_col1[6].currentText() if len(self.combos_col1) > 6 else "白色"
-            plate_number = self.widgets_col2[0].currentText() if self.widgets_col2[0] is not None else "京A12345"
-            service_phone = self.widgets_col2[1].text() if self.widgets_col2[1] is not None else "13800000002"
-            production_time = self.widgets_col2[3].dateTime().toString('yyyy-MM-dd HH:mm:ss') if self.widgets_col2[3] is not None else "2025-07-20 14:30:00"
+            plate_number = self.widgets_col2[0].currentText() if self.widgets_col2[0] is not None else "示例车牌A"
+            service_phone = self.widgets_col2[1].text() if self.widgets_col2[1] is not None else "示例电话B"
+            production_time = self.widgets_col2[3].dateTime().toString('yyyy-MM-dd HH:mm:ss') if self.widgets_col2[3] is not None else "2000-01-01 00:00:00"
             inspection_result = "合格"  # 固定检验结果
             qr_sequence = self.widgets_col2[2].text() if self.widgets_col2[2] is not None else "QRC00000029"
-            issuer_display = self.combos_col1[2].currentText() if len(self.combos_col1) > 2 else "[已脱敏]"
+            issuer_display = self.combos_col1[2].currentText() if len(self.combos_col1) > 2 else "示例"
             # 从显示文本中提取工号
             if " (" in issuer_display and issuer_display.endswith(")"):
                 issuer_name = issuer_display.split(" (")[1].rstrip(")")
@@ -1967,7 +1967,7 @@ class QRPrintWidget(QWidget):
                     break
             
             # 获取执行标准文本（仅显示标准，不含单位）
-            standard_text = self.quantity_edit.text() if self.quantity_edit is not None else "GB/T10801.2-2018"
+            standard_text = self.quantity_edit.text() if self.quantity_edit is not None else "GB/T XXXXX-XXXX"
             
             # 获取二维码序列号
             qr_sequence = self.widgets_col2[2].text() if len(self.widgets_col2) > 2 else "B-DEMO-000000001"
@@ -2038,7 +2038,7 @@ class QRPrintWidget(QWidget):
             
         except Exception as e:
             print(f"更新二维码内容失败: {e}")
-            qr_content = "示例品牌A QRC00000001"
+            qr_content = "示例单位A QRC00000001"
             self.generate_minimal_qr_code(qr_content)
             self.current_qr_content = qr_content
 
@@ -2067,10 +2067,10 @@ class QRPrintWidget(QWidget):
     def get_company_prefix(self, company_name):
         """根据公司名称获取公司简称前缀"""
         company_prefix_map = {
-            "[已脱敏城市]示例品牌A有限公司": "B",
-            "[已脱敏城市]示例品牌B材料有限公司": "A",
-            "示例品牌A": "B",
-            "示例品牌B": "A"
+            "示例单位A": "B",
+            "示例单位B": "A",
+            "示例单位A": "B",
+            "示例单位B": "A"
         }
         
         # 精确匹配
@@ -2528,10 +2528,10 @@ class QRPrintWidget(QWidget):
             logo_path = None
             assets_dir = os.path.join(os.path.dirname(__file__), '..', 'assets')
             
-            if "示例品牌A" in company_cn or "示例" in company_cn:
-                logo_path = os.path.join(assets_dir, "示例品牌A 透明.png")
-            elif "示例品牌B" in company_cn or "示例" in company_cn:
-                logo_path = os.path.join(assets_dir, "示例品牌B 透明.png")
+            if "示例单位A" in company_cn or "示例" in company_cn:
+                logo_path = os.path.join(assets_dir, "示例单位A 透明.png")
+            elif "示例单位B" in company_cn or "示例" in company_cn:
+                logo_path = os.path.join(assets_dir, "示例单位B 透明.png")
             
             if logo_path and os.path.exists(logo_path):
                 try:
@@ -2601,7 +2601,7 @@ class QRPrintWidget(QWidget):
             dt = self.widgets_col2[3].dateTime()
             prod_date = dt.toString('yyyy年MM月dd日')
             
-        standard_text = self.quantity_edit.text() if self.quantity_edit.text() else "GB/T10801.2-2018"
+        standard_text = self.quantity_edit.text() if self.quantity_edit.text() else "GB/T XXXXX-XXXX"
         
         # 修复：8行数据信息（删除冒号并扩大第二列宽度）
         fields = [
@@ -2610,9 +2610,9 @@ class QRPrintWidget(QWidget):
             ("产品特性", self.combos_col1[5].currentText() if len(self.combos_col1) > 5 else "保温隔热"),
             ("产品颜色", self.combos_col1[6].currentText() if len(self.combos_col1) > 6 else "白色"),
             ("执行标准", standard_text),
-            ("产品批次号", self.widgets_col2[4].text() if len(self.widgets_col2) > 4 else "20240720001"),
+            ("产品批次号", self.widgets_col2[4].text() if len(self.widgets_col2) > 4 else "BATCH-0003"),
             ("生产日期", prod_date),
-            ("生产地址", "[已脱敏地址]")
+            ("生产地址", "示例地址")
         ]
         
         # 重新计算表格布局：8行数据，每行高度均匀分布，调整为1.3倍行距
@@ -2937,17 +2937,17 @@ class QRPrintWidget(QWidget):
             base_production_date = self.widgets_col2[3].dateTime()
             
             if company_name is None:
-                company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "[已脱敏城市]示例品牌A有限公司"
+                company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "示例单位A"
             
             # 预加载和缓存公司LOGO
             cached_logo = None
             logo_path = None
             assets_dir = os.path.join(os.path.dirname(__file__), '..', 'assets')
 
-            if "示例品牌A" in company_name or "示例" in company_name:
-                logo_path = os.path.join(assets_dir, "示例品牌A 透明.png")
-            elif "示例品牌B" in company_name or "示例" in company_name:
-                logo_path = os.path.join(assets_dir, "示例品牌B 透明.png")
+            if "示例单位A" in company_name or "示例" in company_name:
+                logo_path = os.path.join(assets_dir, "示例单位A 透明.png")
+            elif "示例单位B" in company_name or "示例" in company_name:
+                logo_path = os.path.join(assets_dir, "示例单位B 透明.png")
 
             if logo_path and os.path.exists(logo_path):
                 try:
@@ -3693,7 +3693,7 @@ class QRPrintWidget(QWidget):
             product_feature = self.combos_col1[5].currentText() if len(self.combos_col1) > 5 else "保温隔热"
             product_color = self.combos_col1[6].currentText() if len(self.combos_col1) > 6 else "白色"
             distributor_name = self.combos_col1[7].currentText() if len(self.combos_col1) > 7 else "官方直销"
-            standard = self.quantity_edit.text() if self.quantity_edit.text() else "GB/T10801.2-2018"
+            standard = self.quantity_edit.text() if self.quantity_edit.text() else "GB/T XXXXX-XXXX"
             quantity = "1"
             batch_number = self.widgets_col2[4].text()
             plate_number = self.widgets_col2[0].currentText() if hasattr(self.widgets_col2[0], 'currentText') else self.widgets_col2[0].text()
@@ -3766,16 +3766,16 @@ class QRPrintWidget(QWidget):
                     'remark': remark,
                     'print_user_name': print_user_name,
                     'print_user_employee_id': print_user_employee_id,
-                    'official_website': f"https://{'www.your-company-domain.com' if '示例品牌B' in company_name or '示例' in company_name else 'www.your-company-domain.com'}".replace('http://','https://')
+                    'official_website': f"https://{'www.your-company-domain.com' if '示例单位B' in company_name or '示例' in company_name else 'www.your-company-domain.com'}".replace('http://','https://')
                 }
                 
                 # 根据公司确定保存目录（使用绝对路径确保正确）
                 base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                if "示例品牌B" in company_name or "示例" in company_name:
+                if "示例单位B" in company_name or "示例" in company_name:
                     data_dir = os.path.join(base_path, "cloud", "demo_json_a")
                     domain = "your-company-domain.com"
                     prefix = "A-Q"
-                elif "示例品牌A" in company_name or "示例" in company_name:
+                elif "示例单位A" in company_name or "示例" in company_name:
                     data_dir = os.path.join(base_path, "cloud", "demo_json_b")
                     domain = "your-company-domain.com"
                     prefix = "B-Q"
@@ -3838,10 +3838,10 @@ class QRPrintWidget(QWidget):
                                     return
                                 with open(cfg_path, 'r', encoding='utf-8') as f:
                                     ftp_servers = json.load(f)
-                                if "示例品牌B" in company_name or "示例" in company_name:
+                                if "示例单位B" in company_name or "示例" in company_name:
                                     server = ftp_servers.get('A', {})
                                     company_dir = 'demo_json_a'
-                                elif "示例品牌A" in company_name or "示例" in company_name:
+                                elif "示例单位A" in company_name or "示例" in company_name:
                                     server = ftp_servers.get('B', {})
                                     company_dir = 'demo_json_b'
                                 else:
@@ -4003,7 +4003,7 @@ class QRPrintWidget(QWidget):
         """初始化二维码序号，确保基于公司专属历史记录递增 - 修复版本"""
         try:
             # 获取当前公司名称
-            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "[已脱敏城市]示例品牌A有限公司"
+            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "示例单位A"
             company_prefix = self.get_company_prefix(company_name)
             
             # 使用原子性方法获取最大序号
@@ -4050,7 +4050,7 @@ class QRPrintWidget(QWidget):
         """生成新的二维码序号，确保基于公司专属历史记录唯一递增 - 修复版本"""
         try:
             # 获取当前公司名称
-            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "[已脱敏城市]示例品牌A有限公司"
+            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "示例单位A"
             company_prefix = self.get_company_prefix(company_name)
             
             # 使用数据库事务确保原子性
@@ -4137,7 +4137,7 @@ class QRPrintWidget(QWidget):
             import re
             
             # 根据公司确定云端数据目录
-            if "示例品牌B" in company_name or "示例" in company_name:
+            if "示例单位B" in company_name or "示例" in company_name:
                 cloud_dir = os.path.join(os.path.dirname(__file__), '..', 'cloud', 'company_a', 'data')
             else:
                 cloud_dir = os.path.join(os.path.dirname(__file__), '..', 'cloud', 'company_b', 'data')
@@ -4186,9 +4186,9 @@ class QRPrintWidget(QWidget):
             
             # 2. 检查云端文件
             import os
-            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "[已脱敏城市]示例品牌A有限公司"
+            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "示例单位A"
             
-            if "示例品牌B" in company_name or "示例" in company_name:
+            if "示例单位B" in company_name or "示例" in company_name:
                 cloud_dir = os.path.join(os.path.dirname(__file__), '..', 'cloud', 'company_a', 'data')
             else:
                 cloud_dir = os.path.join(os.path.dirname(__file__), '..', 'cloud', 'company_b', 'data')
@@ -4222,9 +4222,9 @@ class QRPrintWidget(QWidget):
             
             # 2. 检查云端文件
             import os
-            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "[已脱敏城市]示例品牌A有限公司"
+            company_name = self.combos_col1[0].currentText() if self.combos_col1[0] is not None else "示例单位A"
             
-            if "示例品牌B" in company_name or "示例" in company_name:
+            if "示例单位B" in company_name or "示例" in company_name:
                 cloud_dir = os.path.join(os.path.dirname(__file__), '..', 'cloud', 'company_a', 'data')
             else:
                 cloud_dir = os.path.join(os.path.dirname(__file__), '..', 'cloud', 'company_b', 'data')
@@ -4313,17 +4313,17 @@ class QRPrintWidget(QWidget):
                     product_spec = self.combos_col1[4].currentText() if len(self.combos_col1) > 4 else "30mm"
                     product_feature = self.combos_col1[5].currentText() if len(self.combos_col1) > 5 else "保温隔热"
                     product_color = self.combos_col1[6].currentText() if len(self.combos_col1) > 6 else "白色"
-                    plate_number = self.widgets_col2[0].currentText() if len(self.widgets_col2) > 0 and hasattr(self.widgets_col2[0], 'currentText') else "京A12345"
-                    service_phone = self.widgets_col2[1].text() if len(self.widgets_col2) > 1 else "13800000002"
-                    production_time = self.widgets_col2[3].dateTime().toString('yyyy-MM-dd HH:mm:ss') if len(self.widgets_col2) > 3 and hasattr(self.widgets_col2[3], 'dateTime') else "2025-07-20 14:30:00"
-                    batch_number = self.widgets_col2[4].text() if len(self.widgets_col2) > 4 else "20240720001"
+                    plate_number = self.widgets_col2[0].currentText() if len(self.widgets_col2) > 0 and hasattr(self.widgets_col2[0], 'currentText') else "示例车牌A"
+                    service_phone = self.widgets_col2[1].text() if len(self.widgets_col2) > 1 else "示例电话B"
+                    production_time = self.widgets_col2[3].dateTime().toString('yyyy-MM-dd HH:mm:ss') if len(self.widgets_col2) > 3 and hasattr(self.widgets_col2[3], 'dateTime') else "2000-01-01 00:00:00"
+                    batch_number = self.widgets_col2[4].text() if len(self.widgets_col2) > 4 else "BATCH-0003"
                     inspection_result = "合格"
-                    issuer_display = self.combos_col1[2].currentText() if len(self.combos_col1) > 2 else "[已脱敏]"
+                    issuer_display = self.combos_col1[2].currentText() if len(self.combos_col1) > 2 else "示例"
                     if " (" in issuer_display and issuer_display.endswith(")"):
                         issuer_name = issuer_display.split(" (")[1].rstrip(")")
                     else:
                         issuer_name = issuer_display
-                    standard_text = self.quantity_edit.text() if hasattr(self, 'quantity_edit') and self.quantity_edit.text() else "GB/T10801.2-2018"
+                    standard_text = self.quantity_edit.text() if hasattr(self, 'quantity_edit') and self.quantity_edit.text() else "GB/T XXXXX-XXXX"
                     distributor_name = self.combos_col1[7].currentText() if len(self.combos_col1) > 7 else ""
                     remark = self.remark_edit.text() if hasattr(self, 'remark_edit') and self.remark_edit else ""
                     
@@ -4390,9 +4390,9 @@ class QRPrintWidget(QWidget):
                 
             # 根据公司名称选择对应的LOGO
             if "示例" in company_name:
-                logo_path = "assets/示例品牌B 透明.png"
+                logo_path = "assets/示例单位B 透明.png"
             elif "示例" in company_name:
-                logo_path = "assets/示例品牌A 透明.png"
+                logo_path = "assets/示例单位A 透明.png"
             else:
                 return None
             

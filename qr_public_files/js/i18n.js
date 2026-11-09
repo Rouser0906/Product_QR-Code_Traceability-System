@@ -7,7 +7,7 @@
 const i18nResources = {
     zh: {
         // 页面标题和基础文本
-        'page-title': '产品溯源信息 - [已脱敏城市]示例品牌B材料有限公司',
+        'page-title': '产品溯源信息 - 示例单位B',
         'loading': '正在加载产品信息...',
         'product-info': '产品溯源信息',
         

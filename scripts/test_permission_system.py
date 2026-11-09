@@ -18,7 +18,7 @@ def test_permission_system():
     # 测试用户数据
     test_users = [
         {'username': 'admin', 'employee_id': 'admin', 'user_id': 1},
-        {'username': '9810001', 'employee_id': '9810001', 'user_id': 17},  # 孙七
+        {'username': 'EMP-0001', 'employee_id': 'EMP-0001', 'user_id': 17},  # 示例用户C
         {'username': 'test_operator', 'employee_id': 'OP001', 'user_id': 999},
         {'username': 'test_manager', 'employee_id': 'MG001', 'user_id': 998},
         {'username': 'test_viewer', 'employee_id': 'VW001', 'user_id': 997}
@@ -129,7 +129,7 @@ def test_edge_cases():
         {'name': '空用户名', 'user': {'username': '', 'employee_id': ''}},
         {'name': '不存在的用户', 'user': {'username': 'nonexistent', 'employee_id': 'NE999'}},
         {'name': '无员工ID', 'user': {'username': 'test_user'}},
-        {'name': '孙七用户', 'user': {'username': '9810001', 'employee_id': '9810001'}},
+        {'name': '示例用户C', 'user': {'username': 'EMP-0001', 'employee_id': 'EMP-0001'}},
     ]
     
     for case in edge_cases:

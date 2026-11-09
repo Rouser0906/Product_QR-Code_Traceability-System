@@ -586,7 +586,7 @@ IP地址: {user_data[10]}
         
         ip_edit = QLineEdit()
         ip_edit.setPlaceholderText("IP地址")
-        ip_edit.setText("192.168.1.100")
+        ip_edit.setText("192.0.2.1")
         
         expires_edit = QDateTimeEdit()
         expires_edit.setDateTime(datetime.now().replace(year=datetime.now().year + 1))
@@ -787,7 +787,7 @@ IP地址: {user_data[10]}
                             row.get('登录方式', 'phone'),
                             row.get('手机号', ''),
                             row.get('用户姓名', ''),
-                            row.get('IP地址', '192.168.1.100'),
+                            row.get('IP地址', '192.0.2.1'),
                             datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                             f"token_{datetime.now().timestamp()}_{imported_count}",
                             row.get('过期时间', '2025-12-31 23:59:59')

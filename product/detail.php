@@ -25,13 +25,13 @@ if (!empty($code)) {
                 // 设置公司信息
                 if (strpos($code, 'A-') === 0) {
                     $company_info = [
-                        'name' => '[已脱敏城市]示例品牌B材料有限公司',
+                        'name' => '示例单位B',
                         'website' => 'https://www.your-company-domain.com',
                         'color' => '#e74c3c'
                     ];
                 } elseif (strpos($code, 'B-') === 0) {
                     $company_info = [
-                        'name' => '[已脱敏城市]示例品牌A有限公司',
+                        'name' => '示例单位A',
                         'website' => 'https://www.your-company-domain.com',
                         'color' => '#3498db'
                     ];
@@ -46,24 +46,24 @@ if (!empty($code)) {
 // 如果没有找到数据，使用默认数据
 if (!$product_data || !$company_info) {
     $product_data = [
-        'company_name' => '[已脱敏城市]示例品牌B材料有限公司',
-        'product_type' => 'XPS挤塑板',
-        'product_spec' => '1800mm*600mm*50mm',
-        'product_color' => '蓝色',
-        'product_feature' => '隔热、保温',
+        'company_name' => '示例单位B',
+        'product_type' => '示例产品',
+        'product_spec' => '示例规格',
+        'product_color' => '示例颜色',
+        'product_feature' => '示例特性',
         'quantity' => '1',
         'unit' => 'm³',
-        'batch_number' => '20250815001',
-        'production_date' => '2025-08-15 10:56:28',
-        'distributor_name' => '[已脱敏城市]示例公司市场中心',
-        'issuer_name' => '9810001',
-        'plate_number' => '京A12345',
-        'phone' => '（+86）138 0000 0000',
+        'batch_number' => 'BATCH-0002',
+        'production_date' => '2000-01-01 00:00:00',
+        'distributor_name' => '示例机构B',
+        'issuer_name' => 'EMP-0001',
+        'plate_number' => '示例车牌A',
+        'phone' => '示例电话',
         'official_website' => 'https://www.your-company-domain.com'
     ];
     
     $company_info = [
-        'name' => '[已脱敏城市]示例品牌B材料有限公司',
+        'name' => '示例单位B',
         'website' => 'https://www.your-company-domain.com',
         'color' => '#e74c3c'
     ];

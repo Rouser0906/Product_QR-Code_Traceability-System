@@ -394,7 +394,7 @@ class ExportImportManager:
                     'status': '活跃'
                 },
                 'logistics_vehicles': {
-                    'plate_number': '京A12345',
+                    'plate_number': '示例车牌A',
                     'driver_name': '王五',
                     'phone': '137XXXXXXXX',  # 示例电话号码
                     'vehicle_type': '货车',

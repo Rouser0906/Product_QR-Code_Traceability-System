@@ -181,7 +181,7 @@
     </div>
     <div class="footer" id="footer">
       <a class="btn" href="#" id="websiteBtn">进入官网</a>
-      <div class="copyright" id="copyright">C2025[已脱敏城市]示例品牌B材料有限公司.科技赋能.安全溯源</div>
+      <div class="copyright" id="copyright">C2025示例单位B.科技赋能.安全溯源</div>
     </div>
   </div>
   
@@ -190,52 +190,52 @@
     const productDatabase = {
       'A-DEMO-000008704': {
         qr_sequence: 'A-DEMO-000008704',
-        company_name: '[已脱敏城市]示例品牌B材料有限公司',
+        company_name: '示例单位B',
         official_website: 'https://www.example.com',
         product_type: '聚氨酯保温板',
         product_spec: '1200×600×50mm',
         product_feature: '阻燃B1级',
         product_color: '白色',
-        plate_number: '京A12345',
-        phone: '13800000001',
+        plate_number: '示例车牌A',
+        phone: '示例电话A',
         production_date: '2025-09-20',
-        batch_number: 'A20250920001',
+        batch_number: 'ABATCH-0005',
         quality_status: '合格',
         issuer_code: 'A001',
-        standard: 'GB/T 17794-2008',
+        standard: 'GB/T XXXXX-XXXX',
         distributor_name: '示例经销商',
         remark: '防火保温材料'
       },
       'A-DEMO-000008705': {
         qr_sequence: 'A-DEMO-000008705',
-        company_name: '[已脱敏城市]示例品牌B材料有限公司',
+        company_name: '示例单位B',
         official_website: 'https://www.example.com',
         product_type: '岩棉保温板',
         product_spec: '1200×600×80mm',
         product_feature: '防火A级',
         product_color: '灰色',
-        plate_number: '京A67890',
-        phone: '13800000002',
+        plate_number: '示例车牌B',
+        phone: '示例电话B',
         production_date: '2025-09-21',
-        batch_number: 'A20250921002',
+        batch_number: 'ABATCH-0006',
         quality_status: '合格',
         issuer_code: 'A002',
-        standard: 'GB/T 25975-2010',
+        standard: 'GB/T XXXXX-XXXX',
         distributor_name: '广州经销商',
         remark: '高温防火材料'
       },
       'B-DEMO-000000001': {
         qr_sequence: 'B-DEMO-000000001',
-        company_name: '[已脱敏城市]示例品牌A有限公司',
+        company_name: '示例单位A',
         official_website: 'https://www.example.com',
         product_type: '轻质隔墙板',
         product_spec: '2440×610×100mm',
         product_feature: '轻质高强',
         product_color: '白色',
-        plate_number: '京A11111',
-        phone: '13800000003',
+        plate_number: '示例车牌C',
+        phone: '示例电话C',
         production_date: '2025-09-22',
-        batch_number: 'B20250922001',
+        batch_number: 'BBATCH-0007',
         quality_status: '合格',
         issuer_code: 'B001',
         standard: 'JG/T 169-2016',
@@ -443,11 +443,11 @@
       const copyright = document.getElementById('copyright');
       
       if (companyName.includes('示例') || companyName.includes('B')) {
-        headerTitle.textContent = '●产品溯源.示例品牌A';
-        copyright.textContent = 'C2025[已脱敏城市]示例品牌A有限公司.安全溯源';
+        headerTitle.textContent = '●产品溯源.示例单位A';
+        copyright.textContent = 'C2025示例单位A.安全溯源';
       } else {
         headerTitle.textContent = '●产品溯源.示例城市';
-        copyright.textContent = 'C2025[已脱敏城市]示例品牌B材料有限公司.科技赋能.安全溯源';
+        copyright.textContent = 'C2025示例单位B.科技赋能.安全溯源';
       }
     }
     

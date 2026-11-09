@@ -13,13 +13,13 @@ define('CACHE_DIR', __DIR__ . '/../cache/product_data/');
 define('FTP_SERVERS', [
     'A' => [
         'base_url'    => 'https://scan.example.com/companies/demo_json_a/',
-        'company'     => '[已脱敏城市]示例品牌B材料有限公司',
+        'company'     => '示例单位B',
         'timeout'     => 15,
         'max_retries' => 3
     ],
     'B' => [
         'base_url'    => 'https://scan.example.com/companies/demo_json_b/',
-        'company'     => '[已脱敏城市]示例品牌A有限公司',
+        'company'     => '示例单位A',
         'timeout'     => 15,
         'max_retries' => 3
     ]
